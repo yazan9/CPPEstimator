@@ -1,0 +1,19 @@
+ <fieldset class="border p-2 fieldset-bottom-margin">
+  <legend class="w-auto legend-text">Earnings</legend>
+ 
+ <div *ngFor="let earning of Earnings" class="form-group row">
+    <label for="InputName" class="col-sm-4 col-form-label">Age {{CurrentYear-YearOfBirth- (CurrentYear-earning.Year) }} ({{earning.Year}}) $ </label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="InputName" placeholder="Earning">
+    </div>
+    <div class="col-sm-2 align-middle">
+      <input type="checkbox" class="form-check-input" id="Max">
+      <label class="form-check-label" for="Max">Max</label>
+    </div>
+  </div>
+  
+  <div>
+    <button type="button" class="btn btn-outline-primary margin-1">Maximize</button>
+    <button type="button" class="btn btn-outline-dark margin-1">Clear</button>
+ </div>
+ </fieldset>

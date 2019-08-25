@@ -1,0 +1,17 @@
+ <fieldset class="border p-2 fieldset-bottom-margin">
+  <legend class="w-auto legend-text">Personal Details</legend>
+ 
+ <div class="form-group row">
+    <label for="InputName" class="col-sm-3 col-form-label">Name</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="InputName" placeholder="Name">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="InputBirth" class="col-sm-3 col-form-label">Date of Birth</label>
+    <div class="col-sm-9">
+      <input type="text" [(ngModel)]="DateOfBirth" class="form-control" id="InputBirth" placeholder="(YYYY-MM)" (input)="onTextChange($event.target.value)">
+    </div>
+  </div>
+ </fieldset>
