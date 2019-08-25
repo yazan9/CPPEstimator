@@ -6,7 +6,7 @@ const app = express();
 
 // Serve only the static files form the dist directory
 var distDir = __dirname + "/dist/";
-app.use(express.static(distDir));
+app.use(express.static(__dirname + '/dist/estimator'));
 
 app.get('/*', function(req,res) {
     
