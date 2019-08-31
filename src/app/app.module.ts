@@ -10,6 +10,11 @@ import { BenefitScenariosComponent } from './benefit-scenarios/benefit-scenarios
 import { EarningsComponent } from './earnings/earnings.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AddScenarioModalComponent } from './add-scenario-modal/add-scenario-modal.component';
+import { BlogMainComponent } from './blog-main/blog-main.component';
+import { BlogThumbnailComponent } from './blog-thumbnail/blog-thumbnail.component';
+import { BlogPostDetailsComponent } from './blog-post-details/blog-post-details.component';
+import { NewBlogPostComponent } from './new-blog-post/new-blog-post.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -18,13 +23,18 @@ import { AddScenarioModalComponent } from './add-scenario-modal/add-scenario-mod
     PersonalDetailsComponent,
     BenefitScenariosComponent,
     EarningsComponent,
-    AddScenarioModalComponent
+    AddScenarioModalComponent,
+    BlogMainComponent,
+    BlogThumbnailComponent,
+    BlogPostDetailsComponent,
+    NewBlogPostComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    CKEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent],

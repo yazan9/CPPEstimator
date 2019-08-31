@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <h1 class="display-4">Welcome to our information centre</h1>
+      <p class="lead">Explore our digital collection and browse through our resources</p>
+      <hr class="my-4">
+      <p>Select a category to read from</p>
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{SelectedCategory.Title}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button *ngFor="let category of AllCategories" ngbDropdownItem (click)="onSelect(category)">{{category.Title}}</button>
+        </div>
+        <a class="btn btn-outline-danger margin-left-1" routerLink="/new_post">+ Create a new resource</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngFor="let post of AllPosts" class=blog-thumbnail>
+  <h4>{{post.Title}}</h4>
+  <div class="post-date">{{AllMonths[post.Modified.getMonth()].toUpperCase() + ' ' + post.Modified.getDate() + ', '+post.Modified.getFullYear()}}</div>
+  <div class="blog-body-thumbnail" [innerHTML]="(post.Body | slice :0:300) + ' ...'"></div>
+  <a class="btn btn-outline-dark" routerLink="/post/{{post.id}}">Read More</a>
+  <hr>
+</div>

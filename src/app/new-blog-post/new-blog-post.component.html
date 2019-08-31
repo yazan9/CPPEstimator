@@ -1,0 +1,19 @@
+<form>
+    <div class="form-group">
+    <label for="CategoryInput">Category</label>
+    <select class="form-control" id="CategoryInput">
+      <option *ngFor="let category of AllCategories">{{category.Title}}</option>
+    </select>
+  </div>
+            <div class="form-group">
+                <label for="InputTitle">Title</label>
+                    <input name="NewTitle" type="text" [(ngModel)] = "newBlogPost.Title" class="form-control" id="InputTitle" placeholder="Title">
+            </div>
+
+            <div class="form-group">
+                <label for="InputBody">Content</label>
+                    <ckeditor name="NewBody" [editor]="Editor" [(ngModel)] = "newBlogPost.Body" data=" "></ckeditor>
+            </div>
+            
+            <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+</form>
