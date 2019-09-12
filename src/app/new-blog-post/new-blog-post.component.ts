@@ -52,6 +52,15 @@ export class NewBlogPostComponent implements OnInit {
   
   onSubmit()
   {
+    if(this.SelectedCategory == null)
+    return;
+
+    if(this.newBlogPost.title == null || this.newBlogPost.title.trim() == "")
+    return;
+
+    if(this.newBlogPost.body == null || this.newBlogPost.body.trim() == "")
+    return;
+
     this.newBlogPost.updated_at = new Date();
     this.newBlogPost.category = this.SelectedCategory;
 

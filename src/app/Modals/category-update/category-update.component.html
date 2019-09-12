@@ -4,12 +4,14 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form ngNativeValidate>
       <div class="modal-body">
             <div class="form-group">
                     <label for="UpdatedCategoryName">Category name</label>
-                    <input type="text" class="form-control" id="UpdatedCategoryName" placeholder="Name" [(ngModel)] = "UpdatedCategory.name">
+                    <input type="text" class="form-control" id="UpdatedCategoryName" name="UpdatedCategoryName" placeholder="Name" [(ngModel)] = "UpdatedCategory.name" required>
                   </div>
       </div>
+      </form>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" (click)="Save()">Update</button>
       </div>

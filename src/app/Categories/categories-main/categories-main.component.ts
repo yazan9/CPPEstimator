@@ -35,6 +35,8 @@ export class CategoriesMainComponent implements OnInit {
   }
 
   onAdd(): void {
+    if(this.NewCategory.name == null || this.NewCategory.name.trim() == "")
+    return;
     this.blogService.addCategory(this.NewCategory).subscribe(category => {
       this.AllCategories.push(category);
       this.NewCategory = new Category();

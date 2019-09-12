@@ -20,6 +20,8 @@ export class CategoryUpdateComponent implements OnInit {
 
   Save()
   {
+    if(this.UpdatedCategory.name == null || this.UpdatedCategory.name.trim() == "")
+    return;
     this.blogService.updateCategory(this.UpdatedCategory).subscribe(()=>{
       this.activeModal.close(Result.Success);
     });

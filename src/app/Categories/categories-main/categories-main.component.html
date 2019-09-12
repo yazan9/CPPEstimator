@@ -2,11 +2,13 @@
     <div class="col">
             <h1>Manage Categories</h1>
             
-            <form class="form-inline">
+            <form class="form-inline" ngNativeValidate>
             <div class="form-group">
                     <label for="NewCategory">New Category</label>
-                    <input type="text" class="form-control margin-left-1" id="NewCategory" name="NewCategory" [(ngModel)] = "NewCategory.name" placeholder="Category Name">
-                    <button class="btn btn-primary margin-left-1" (click)="onAdd()">Add</button>
+                    <input type="text" class="form-control margin-left-1" id="NewCategory" name="NewCategory" [(ngModel)] = "NewCategory.name" placeholder="Category Name" required>
+          
+                    <input type="submit" class="btn btn-primary margin-left-1" (click)="onAdd()" value="Add"/>
+                    
             </div>
             </form>
 <br>
