@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  backendUri: 'https://cpp-estimator-backend.herokuapp.com'
 };

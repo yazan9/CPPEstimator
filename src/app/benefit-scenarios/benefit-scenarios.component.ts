@@ -26,7 +26,6 @@ export class BenefitScenariosComponent implements OnInit {
   }
   
   onDelete(scenario: BenefitScenario): void {
-    //this.selectedScenario = scenario;
     const index: number = this.benefitScenarios.indexOf(scenario);
     if (index !== -1) {
         this.benefitScenarios.splice(index, 1);

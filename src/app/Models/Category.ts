@@ -1,5 +1,6 @@
 export class Category {
-  Title: string;
+  id: number;
+  name: string;
   
   public constructor(init?:Partial<Category>) {
         Object.assign(this, init);

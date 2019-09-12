@@ -1,0 +1,16 @@
+<div class="modal-header">
+        <h4 class="modal-title" id="UpdateCategoryModal">Update Category</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="form-group">
+                    <label for="UpdatedCategoryName">Category name</label>
+                    <input type="text" class="form-control" id="UpdatedCategoryName" placeholder="Name" [(ngModel)] = "UpdatedCategory.name">
+                  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="Save()">Update</button>
+      </div>
+    

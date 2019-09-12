@@ -1,17 +1,22 @@
+<div *ngIf = "blogPost">
 <div class="row">
   <div class="col">
     <div class="jumbotron text-center">
-      <h3 class="display-4">{{blogPost.Title}}</h3>
+      <h3 class="display-4">{{blogPost.title}}</h3>
       <hr class="my-4">
-  <div class="post-date">{{Helper.PrintDate(blogPost.Modified)}} | CATEGORY</div>
+  <div class="post-date">{{Helper.PrintDate(blogPost.updated_at)}} | {{blogPost.category.name.toUpperCase()}}</div>
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col">
-      <div class="text-justify" [innerHTML] = "blogPost.Body">
+      <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button type="button" class="btn btn-primary margin-left-1" (click)="onUpdate()">Edit</button>
+
+      <div class="text-justify" [innerHTML] = "blogPost.body">
       </div>
       
       </div>
-      </div>
+</div>
+</div>

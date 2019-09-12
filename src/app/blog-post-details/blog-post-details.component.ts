@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { BlogHelper } from '../Helpers/BlogHelper';
 import { BlogService }  from '../services//blog.service';
@@ -17,6 +17,7 @@ export class BlogPostDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private blogService: BlogService,
     private location: Location
     ) { }
@@ -31,4 +32,13 @@ export class BlogPostDetailsComponent implements OnInit {
     this.blogService.getBlogPost(id).subscribe(blogPost => this.blogPost = blogPost);
   }
 
+  onDelete(): void
+  {
+    this.blogService.deleteBlogPost(this.blogPost.id).subscribe(()=>this.location.back());
+  }
+
+  onUpdate():void{
+    this.blogService.updatedPost = this.blogPost;
+    this.router.navigate(['/new_post']);
+  }
 }

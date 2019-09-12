@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AllBlogPosts } from '../Mocks/MockBlogPosts';
 import { BlogPost} from '../Models/BlogPost';
-import { Categories } from '../Mocks/MockCategories';
 import {Category} from '../Models/Category';
 import { Month } from '../Models/Months';
 import { BlogService } from '../services/blog.service';
+import { BlogHelper } from '../Helpers/BlogHelper';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-blog-main',
@@ -15,23 +15,47 @@ export class BlogMainComponent implements OnInit {
   
   AllPosts: BlogPost[];
   AllMonths=Month;
-  AllCategories = Categories
+  AllCategories:Category[];
   SelectedCategory: Category
+  public Helper = BlogHelper;
+  FilterCategory: string;
   
-  constructor(private blogService: BlogService) { }
+  constructor(
+    private blogService: BlogService, 
+    private route: ActivatedRoute
+    ) { }
 
   ngOnInit() {
     this.getBlogPosts();
-    this.SelectedCategory=this.AllCategories[0];
+    this.blogService.getAllCategories().subscribe(categories => 
+      {
+        this.AllCategories = categories;
+        this.AllCategories.push(new Category);
+        //this.SelectedCategory=this.AllCategories[0];
+      });
   }
   
   onSelect(category: Category): void 
   {
     this.SelectedCategory = category;
+    this.blogService.getBloPostsByCategory(+this.SelectedCategory.id).subscribe(blogPosts => this.AllPosts = blogPosts);
+  }
+
+  onSelectAll(): void 
+  {
+    this.SelectedCategory = null;
+    this.getBlogPosts();
   }
   
   getBlogPosts():void
   {
-    this.blogService.getBlogPosts().subscribe(blogPosts => this.AllPosts = blogPosts);
+    this.route.queryParams.subscribe(params => {
+      this.FilterCategory = params['category'];
+    });
+
+    if(this.FilterCategory === undefined || this.FilterCategory == "All")
+      this.blogService.getBlogPosts().subscribe(blogPosts => this.AllPosts = blogPosts);
+    else
+      this.blogService.getBloPostsByCategory(+this.FilterCategory).subscribe(blogPosts => this.AllPosts = blogPosts);
   }
 }

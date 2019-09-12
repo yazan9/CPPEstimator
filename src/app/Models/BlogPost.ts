@@ -1,9 +1,12 @@
+import { Category } from './Category';
+
 export class BlogPost {
   id: number;
-  Title: string;
-  Body: string;
-  Created: Date;
-  Modified: Date;
+  title: string;
+  body: string;
+  created_at: Date;
+  updated_at: Date;
+  category: Category;
   
   public constructor(init?:Partial<BlogPost>) {
         Object.assign(this, init);

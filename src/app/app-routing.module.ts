@@ -4,6 +4,7 @@ import { MainFormComponent } from './main-form/main-form.component';
 import {BlogMainComponent} from './blog-main/blog-main.component';
 import {BlogPostDetailsComponent} from './blog-post-details/blog-post-details.component';
 import {NewBlogPostComponent} from './new-blog-post/new-blog-post.component';
+import { CategoriesMainComponent } from './Categories/categories-main/categories-main.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   {path: 'blog', component: BlogMainComponent},
   {path: '', redirectTo: '/main', pathMatch: 'full' },
   {path: 'post/:id', component: BlogPostDetailsComponent},
-  {path: 'new_post', component: NewBlogPostComponent}
+  {path: 'new_post', component: NewBlogPostComponent},
+  {path: 'categories', component: CategoriesMainComponent}
   ];
 
 @NgModule({
