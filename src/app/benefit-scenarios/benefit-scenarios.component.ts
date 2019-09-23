@@ -1,7 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { BenefitScenario } from '../BenefitScenario';
 import {AddScenarioModalComponent} from '../add-scenario-modal/add-scenario-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Result } from '../Models/Result';
+import { CalculatorService } from '../services/calculator.service';
+import { Subscription } from 'rxjs';
+import { Profile } from '../Models/Profile';
 
 @Component({
   selector: 'app-benefit-scenarios',
@@ -10,16 +14,23 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class BenefitScenariosComponent implements OnInit {
   
-  @Input() benefitScenarios: BenefitScenario[];
+  benefitScenarios: BenefitScenario[];
   selectedScenario: BenefitScenario;
   NewScenario: BenefitScenario;
+  subscription: Subscription;
+  Profile: Profile;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(
+    private modalService: NgbModal,
+    private CalculatorService: CalculatorService,
+    ) { }
 
   ngOnInit() {
-    this.NewScenario = {StopWork: "", StartBenefit: "", BenefitValue: 0};
+    this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
+    this.Profile = this.CalculatorService.getProfile();
+    console.log(this.Profile.Scenarios);
+    this.benefitScenarios = this.Profile.Scenarios;
   }
-  
   
   onSelect(scenario: BenefitScenario): void {
     this.selectedScenario = scenario;
@@ -38,16 +49,25 @@ export class BenefitScenariosComponent implements OnInit {
     modalRef.componentInstance.NewScenario = this.NewScenario;
     
     modalRef.result.then((result) => {
-      if (result) {
-        this.AddNewEntry();
-        this.NewScenario = {StopWork: "", StartBenefit: "", BenefitValue: 0};
-      }
-  });
+      if (result === Result.Success) {
+        this.ProcessNewScenario();
+      }}, (reason) => {}
+  );
   }
-  
-  AddNewEntry()
+
+  ProcessNewScenario()
   {
-    this.benefitScenarios.push(this.NewScenario);
+    this.NewScenario.StartBenefit = new Date (this.NewScenario.StartBenefit);
+    this.NewScenario.StopWork = new Date(this.NewScenario.StopWork);
+    this.Profile.Scenarios.push(this.NewScenario);
+
+    this.CalculatorService.getBenefitsForScenario().subscribe(calculatedBenefits => {
+      this.NewScenario = this.Profile.Scenarios.pop();
+      this.NewScenario.BenefitValue = calculatedBenefits;
+      //this.Profile.Scenarios.push(this.NewScenario);
+      this.benefitScenarios.push(this.NewScenario);
+      this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
+    });
   }
   
   Clear()

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MainFormServiceService} from '../main-form-service.service';
+import { CalculatorService } from '../services/calculator.service';
 
 @Component({
   selector: 'app-personal-details',
@@ -10,7 +10,7 @@ export class PersonalDetailsComponent implements OnInit {
   
   DateOfBirth: string;
 
-  constructor(private MainService: MainFormServiceService) {
+  constructor(private CalculatorService: CalculatorService) {
     
   }
 
@@ -20,7 +20,7 @@ export class PersonalDetailsComponent implements OnInit {
   onTextChange(searchValue: string): void {  
     if(this.VerifyDateOfBirth() === true)
     {
-      this.MainService.SetDateOfBirth(this.DateOfBirth.slice(0,4));
+      this.CalculatorService.SetDateOfBirth(new Date(this.DateOfBirth));
     }
   }
   

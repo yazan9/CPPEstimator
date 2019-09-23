@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BenefitScenarios } from '../MockBenefitScenarios';
 import {MainFormServiceService} from '../main-form-service.service';
 
 @Component({
@@ -10,8 +9,6 @@ import {MainFormServiceService} from '../main-form-service.service';
 })
 export class MainFormComponent implements OnInit {
   
-  benefitScenarios = BenefitScenarios;
-
   constructor(private MainService: MainFormServiceService) { }
 
   ngOnInit() {
