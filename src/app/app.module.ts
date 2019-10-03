@@ -20,6 +20,10 @@ import { CategoriesManagerComponent } from './Modals/categories-manager/categori
 import { CategoryUpdateComponent } from './Modals/category-update/category-update.component';
 import { CategoryDeleteComponent } from './Modals/category-delete/category-delete.component';
 import { CategoriesMainComponent } from './Categories/categories-main/categories-main.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { LandingComponent } from './landing/landing/landing.component';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,11 @@ import { CategoriesMainComponent } from './Categories/categories-main/categories
     CategoriesManagerComponent,
     CategoryUpdateComponent,
     CategoryDeleteComponent,
-    CategoriesMainComponent
+    CategoriesMainComponent,
+    LoginComponent,
+    RegisterComponent,
+    LandingComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

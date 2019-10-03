@@ -1,6 +1,8 @@
  <fieldset class="border p-2 fieldset-bottom-margin">
   <legend class="w-auto legend-text">Earnings</legend>
  
+  <div class="overflow-auto earnings-box"> 
+
  <div *ngFor="let earning of Earnings" class="form-group row">
     <label for="InputEarning" class="col-sm-4 col-form-label">Age {{CurrentYear-YearOfBirth- (CurrentYear-earning.Year) }} ({{earning.Year}}) $ </label>
     <div class="col-sm-6">
@@ -10,6 +12,7 @@
       <input type="checkbox" class="form-check-input" name= "EarningSelection" id="Max" (change)="ToggleMaximize(earning, $event)" [(ngModel)] = "earning.Selected">
       <label class="form-check-label" for="Max">Max</label>
     </div>
+  </div>
   </div>
   
   <div>

@@ -1,0 +1,58 @@
+<div class="container-fluid h-100 bg-black">
+    <div class="row d-flex justify-content-center align-items-center login-box-container">
+    <div class="login-box jumbotron">
+        <img src="assets/img/Logo3.jpg" style="max-width:50%"/>
+      <hr>
+        <form *ngIf = "!signedUp" #registerForm = "ngForm" (ngSubmit)="register(registerForm)">
+        <div *ngIf="errorMessage != ''" class="alert alert-danger">
+          {{errorMessage}}
+        </div>
+      
+      <div class="form-group">
+        <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" 
+        aria-describedby="emailHelp" [(ngModel)]="credentials.email" placeholder="Enter email" required email #email="ngModel">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+        class="alert alert-danger">
+    
+        <div *ngIf="email.errors.required">
+          Email is required
+        </div>
+        <div *ngIf="email.errors.email">
+          Please enter a valid email
+        </div>
+      </div>
+      </div>
+      
+      <div class="form-group">
+        <input type="text" name = "username" class="form-control form-control-lg" id="exampleInputEmail2" aria-describedby="nameHelp" 
+        placeholder="User Name" [(ngModel)]="credentials.username" required #username="ngModel">
+        <div *ngIf="username.invalid && (username.dirty || username.touched)"
+        class="alert alert-danger">
+    
+        <div *ngIf="username.errors.required">
+          User Name is required
+        </div>
+      </div>
+      </div>
+      
+      <div class="form-group">
+        <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password"
+        name = "password" [(ngModel)]="credentials.password" required #password="ngModel">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+        class="alert alert-danger">
+    
+        <div *ngIf="password.errors.required">
+          Password is required
+        </div>
+      </div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary btn-lg"><i *ngIf="loadingResponse" class="fa fa-spinner fa-spin" style="font-size:24px;"></i> Sign Up</button>
+    </form>
+    <ng-container *ngIf="signedUp"><div><h3>Cool! Please verify your email. Once that's out of the way, you will be able to enjoy everything we have to offer!</h3></div></ng-container>
+    <br>
+    Have an account? <a routerLink="/login">Login!</a>
+    </div>
+    </div>
+    </div>

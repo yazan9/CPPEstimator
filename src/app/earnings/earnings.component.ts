@@ -3,6 +3,7 @@ import { Earning } from '../Earning';
 import { Subscription }   from 'rxjs';
 import { CalculatorService } from '../services/calculator.service';
 import { Profile } from '../Models/Profile';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-earnings',
@@ -19,7 +20,8 @@ export class EarningsComponent implements OnInit, OnDestroy {
   Profile: Profile;
 
   constructor(
-    private CalculatorService: CalculatorService) {
+    private CalculatorService: CalculatorService,
+    private router: Router) {
 
     this.subscription = CalculatorService.DateOFBirth$.subscribe(
       DOB => {
@@ -46,10 +48,18 @@ export class EarningsComponent implements OnInit, OnDestroy {
     if(event.target.checked)
     {
       this.CalculatorService.getYearMax(earning.Year)
-      .subscribe(maxEarning => {
+      .subscribe(
+        maxEarning => {
         earning.Value = +maxEarning;
         earning.Selected = true;
-      });
+      },
+        error => {
+          if(error.status === 401)
+          {
+            this.router.navigateByUrl('/login');
+          }
+        }
+      );
     }
     else
       earning.Selected = false;
@@ -62,7 +72,14 @@ export class EarningsComponent implements OnInit, OnDestroy {
         earning.Value = AllEarnings[i];
         earning.Selected = true;
       });
-    });
+    },
+    error => {
+      if(error.status === 401)
+      {
+        this.router.navigateByUrl('/login');
+      }
+    }
+    );
   }
 
   ClearAll(): void{

@@ -6,6 +6,7 @@ import { Result } from '../Models/Result';
 import { CalculatorService } from '../services/calculator.service';
 import { Subscription } from 'rxjs';
 import { Profile } from '../Models/Profile';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-benefit-scenarios',
@@ -23,6 +24,7 @@ export class BenefitScenariosComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private CalculatorService: CalculatorService,
+    private router: Router
     ) { }
 
   ngOnInit() {
@@ -67,7 +69,14 @@ export class BenefitScenariosComponent implements OnInit {
       //this.Profile.Scenarios.push(this.NewScenario);
       this.benefitScenarios.push(this.NewScenario);
       this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
-    });
+    },
+    error => {
+      if(error.status === 401)
+      {
+        this.router.navigateByUrl('/login');
+      }
+    }
+    );
   }
   
   Clear()

@@ -1,0 +1,45 @@
+<div class="container-fluid h-100 bg-black">
+    <div class="row d-flex justify-content-center align-items-center login-box-container">
+    <div class="login-box jumbotron">
+        <img src="assets/img/Logo3.jpg" style="max-width:50%"/>
+      <hr>
+        <form *ngIf = "!signedUp" #registerForm = "ngForm" (ngSubmit)="login(registerForm)">
+        <div *ngIf="errorMessage != ''" class="alert alert-danger">
+          {{errorMessage}}
+        </div>
+      
+      <div class="form-group">
+        <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" 
+        aria-describedby="emailHelp" [(ngModel)]="credentials.email" placeholder="Enter email" required email #email="ngModel">
+        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+        class="alert alert-danger">
+    
+        <div *ngIf="email.errors.required">
+          Email is required
+        </div>
+        <div *ngIf="email.errors.email">
+          Please enter a valid email
+        </div>
+      </div>
+      </div>
+    
+      
+      <div class="form-group">
+        <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password"
+        name = "password" [(ngModel)]="credentials.password" required #password="ngModel">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+        class="alert alert-danger">
+    
+        <div *ngIf="password.errors.required">
+          Password is required
+        </div>
+      </div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary btn-lg"><i *ngIf="loadingResponse" class="fa fa-spinner fa-spin" style="font-size:24px;"></i> Login</button>
+    </form>
+    <br>
+    New to My Canada Pension Plan? <a routerLink="/register">Sign Up!</a>
+  </div>
+    </div>
+    </div>

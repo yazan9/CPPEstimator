@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Profile } from '../Models/Profile';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +33,17 @@ export class CalculatorService {
     return this.Profile;
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService : AuthenticationService) {
     this.CalculatorUrl = `${this.env.backendUri}/calculator`;
     this.Profile = new Profile();
+  }
+
+  private getHeaders()
+  {
+    return new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    })
   }
 
   getYearMax(Year:string): Observable<Number>
@@ -47,7 +52,11 @@ export class CalculatorService {
       .set("Year", Year)
       .set("BirthDate", this.Profile.DateOfBirth.toISOString());
 
-    return this.http.get<Number>(this.CalculatorUrl + '/yearmax', {params: params});
+      const httpOptions = {
+        headers: this.getHeaders(), params:params
+      };
+
+    return this.http.get<Number>(this.CalculatorUrl + '/yearmax', httpOptions);
   }
 
   getMaximumEarnings():Observable<number[]>
@@ -55,7 +64,11 @@ export class CalculatorService {
     let params:HttpParams = new HttpParams()
       .set("BirthDate", this.Profile.DateOfBirth.toISOString());
 
-    return this.http.get<number[]>(this.CalculatorUrl + '/allmax', {params: params});
+    const httpOptions = {
+      headers: this.getHeaders(), params:params
+     };
+
+    return this.http.get<number[]>(this.CalculatorUrl + '/allmax', httpOptions);
   }
 
   getBenefitsForScenario()
@@ -63,7 +76,11 @@ export class CalculatorService {
     let params:HttpParams = new HttpParams()
       .set("Profile", JSON.stringify(this.Profile));
 
-    return this.http.get<number>(this.CalculatorUrl + '/scenario_benefits', {params: params});
+    const httpOptions = {
+      headers: this.getHeaders(), params:params
+    };
+
+    return this.http.get<number>(this.CalculatorUrl + '/scenario_benefits', httpOptions);
   }
 
 }

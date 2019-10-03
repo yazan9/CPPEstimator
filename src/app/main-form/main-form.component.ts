@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MainFormServiceService} from '../main-form-service.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-main-form',
@@ -9,7 +10,7 @@ import {MainFormServiceService} from '../main-form-service.service';
 })
 export class MainFormComponent implements OnInit {
   
-  constructor(private MainService: MainFormServiceService) { }
+  constructor(private MainService: MainFormServiceService, public auth: AuthenticationService) { }
 
   ngOnInit() {
   }

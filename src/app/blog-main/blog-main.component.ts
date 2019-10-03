@@ -31,7 +31,6 @@ export class BlogMainComponent implements OnInit {
       {
         this.AllCategories = categories;
         this.AllCategories.push(new Category);
-        //this.SelectedCategory=this.AllCategories[0];
       });
   }
   
