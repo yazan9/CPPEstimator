@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   errorMessage = "";
-
   loadingResponse:boolean = false;
   
   credentials: TokenPayload = {

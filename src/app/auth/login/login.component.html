@@ -3,7 +3,7 @@
     <div class="login-box jumbotron">
         <img src="assets/img/Logo3.jpg" style="max-width:50%"/>
       <hr>
-        <form *ngIf = "!signedUp" #registerForm = "ngForm" (ngSubmit)="login(registerForm)">
+        <form #registerForm = "ngForm" (ngSubmit)="login(registerForm)">
         <div *ngIf="errorMessage != ''" class="alert alert-danger">
           {{errorMessage}}
         </div>
