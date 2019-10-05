@@ -24,7 +24,7 @@
   </tbody>
 </table>
 <div>
-    <button type="button" class="btn btn-outline-primary margin-1" (click)="openModal()">Add</button>
+    <button type="button" class="btn btn-outline-primary margin-1" (click)="openModal()" [disabled]="Profile.Earnings.length === 0">Add</button>
     <button type="button" class="btn btn-outline-dark margin-1" (click)="Clear()">Clear</button>
  </div>
  </fieldset>

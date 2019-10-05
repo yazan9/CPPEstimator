@@ -42,8 +42,9 @@ if (registerForm.invalid) {
 //if all is well, call the service function
 this.loadingResponse = true;
 this.auth.register(this.credentials).subscribe(() => {
-  this.router.navigateByUrl("/login");
-  this.signedUp = true;
+  this.auth.login(this.credentials).subscribe(
+    () => {this.router.navigateByUrl("/landing");}
+  );
   this.loadingResponse = false;
 }, (err) => {
   this.errorMessage = "Registration Failed";

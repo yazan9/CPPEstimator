@@ -48,9 +48,11 @@
       </div>
       </div>
       
-      <button type="submit" class="btn btn-primary btn-lg"><i *ngIf="loadingResponse" class="fa fa-spinner fa-spin" style="font-size:24px;"></i> Sign Up</button>
+      <button type="submit" class="btn btn-primary btn-lg" [disabled]="loadingResponse">
+              <span *ngIf="loadingResponse" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Sign Up
+      </button>
     </form>
-    <ng-container *ngIf="signedUp"><div><h3>Cool! Please verify your email. Once that's out of the way, you will be able to enjoy everything we have to offer!</h3></div></ng-container>
     <br>
     Have an account? <a routerLink="/login">Login!</a>
     </div>

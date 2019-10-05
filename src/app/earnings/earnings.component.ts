@@ -19,6 +19,10 @@ export class EarningsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   Profile: Profile;
 
+  loadingMaxAllResponse:boolean = false;
+  loadingMaxYearResponse:boolean = false;
+  toggledYear:string;
+
   constructor(
     private CalculatorService: CalculatorService,
     private router: Router) {
@@ -47,13 +51,18 @@ export class EarningsComponent implements OnInit, OnDestroy {
   ToggleMaximize(earning: Earning, event:any):void{
     if(event.target.checked)
     {
+      this.loadingMaxYearResponse = true
+      this.toggledYear = earning.Year;
       this.CalculatorService.getYearMax(earning.Year)
       .subscribe(
         maxEarning => {
         earning.Value = +maxEarning;
         earning.Selected = true;
+        this.loadingMaxYearResponse = false;
       },
         error => {
+          this.loadingMaxYearResponse = false;
+
           if(error.status === 401)
           {
             this.router.navigateByUrl('/login');
@@ -66,14 +75,17 @@ export class EarningsComponent implements OnInit, OnDestroy {
   }
 
   MaximizeAll():void{
+    this.loadingMaxAllResponse = true;
     this.CalculatorService.getMaximumEarnings()
     .subscribe(AllEarnings => {
       this.Earnings.forEach((earning, i) => {
         earning.Value = AllEarnings[i];
         earning.Selected = true;
       });
+      this.loadingMaxAllResponse = false;
     },
     error => {
+      this.loadingMaxAllResponse = false;
       if(error.status === 401)
       {
         this.router.navigateByUrl('/login');

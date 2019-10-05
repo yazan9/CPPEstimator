@@ -30,7 +30,6 @@ export class BenefitScenariosComponent implements OnInit {
   ngOnInit() {
     this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
     this.Profile = this.CalculatorService.getProfile();
-    console.log(this.Profile.Scenarios);
     this.benefitScenarios = this.Profile.Scenarios;
   }
   
@@ -66,7 +65,6 @@ export class BenefitScenariosComponent implements OnInit {
     this.CalculatorService.getBenefitsForScenario().subscribe(calculatedBenefits => {
       this.NewScenario = this.Profile.Scenarios.pop();
       this.NewScenario.BenefitValue = calculatedBenefits;
-      //this.Profile.Scenarios.push(this.NewScenario);
       this.benefitScenarios.push(this.NewScenario);
       this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
     },

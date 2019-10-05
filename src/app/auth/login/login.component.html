@@ -36,7 +36,10 @@
       </div>
       </div>
       
-      <button type="submit" class="btn btn-primary btn-lg"><i *ngIf="loadingResponse" class="fa fa-spinner fa-spin" style="font-size:24px;"></i> Login</button>
+      <button type="submit" class="btn btn-primary btn-lg" [disabled]="loadingResponse">
+          <span *ngIf="loadingResponse" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Login
+      </button>
     </form>
     <br>
     New to My Canada Pension Plan? <a routerLink="/register">Sign Up!</a>
