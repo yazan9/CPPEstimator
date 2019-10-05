@@ -1,4 +1,4 @@
-<div class="container-fluid full-height bg-black text-white">
+<div class="container-fluid full-height bg-black text-white ">
     <div class="row d-flex bg-white">
         <div class="col-6">
         <img src="assets/img/Logo3.jpg" style="max-width:50%"/>
@@ -12,11 +12,14 @@
                                                 <li class="nav-item">
                                                   <a class="nav-link text-black" href="#">About</a>
                                                 </li>
-                                                <li class="nav-item">
+                                                <li *ngIf="!auth.isLoggedIn()" class="nav-item">
                                                   <a class="nav-link text-black" routerLink="/register">Sign Up</a>
                                                 </li>
-                                                <li class="nav-item">
+                                                <li *ngIf="!auth.isLoggedIn()" class="nav-item">
                                                   <a class="nav-link text-black" routerLink="/login">Login</a>
+                                                </li>
+                                                <li *ngIf="auth.isLoggedIn()" class="nav-item">
+                                                    <a class="nav-link text-black" (click)="auth.logout()" style="cursor: pointer">Logout</a>
                                                 </li>
                                               </ul>
                                 </td>
@@ -25,7 +28,63 @@
                       </table>
         </div>
     </div>
-    <div class="row d-flex justify-content-center align-items-center">
-        Other Content
+    <div class="row">
+      <div class="col-12 justify-content-center align-items-center no-padding">
+          <img src="assets/img/coins.jpg" class="img-fluid" alt="Responsive image">
+      </div>
+    </div>
+    <div class="row background-green">
+      <div class="col-12">
+<div class="main-box">
+        <h1 class="text-center display-4">Navi Consulting</h1>
+        <br>
+        <h5 class="text-center">Unbiased, Fee-for-Service, Financial Planning</h5>
+        <br>
+        <p class="text-center"> 
+          3rd Floor - 1095 McKenzie Avenue, Victoria, BC V8P 2L5
+          250.370.0662 info@naviconsulting.ca
+        </p>
+        </div>
+        </div>
+    </div>
+
+    <div class="row background-green-light justify-content-center align-items-center">
+      <div class="" style="margin-right:0em">
+        <img src="assets/img/planning.jpg" class="img-fluid" alt="Responsive image" style="width:30em;margin-top:5em;margin-bottom:5em">
+        </div>
+        <div class="landing-box-white">
+          <p>
+            <strong>Let us help you plan your future and achieve your goals?</strong>
+          </p>
+          <p>
+            Are you looking for quality financial planning that’s comprehensive and affordable? 
+            </p>
+            
+          <p>
+            
+            We offer unbiased, objective advice.  Unlike many financial planning firms, we do not require that you have a minimum amount of investible assets or that you purchase products in order to work with us.  We want you to receive the service and advice that you need, no matter how much you have in your investment account.  
+            </p>
+            
+             
+            <p>
+            Whether you are looking for advice in a specific area or a comprehensive financial plan, we can provide clear and honest guidance. We focus on giving our customers the recommendations, attention, and in-depth knowledge needed to achieve their goals.
+            </p>
+            <button class="btn btn-dark">Contact</button>
+        </div>
+    </div>
+    <div class="row d-flex bg-white landing-bottom">
+        <div class="col-12">
+            <p>
+              *Fee-for-service financial planners are registered advisors with a fiduciary responsibility to act in their clients' best interests. They are not paid for financial planning based on fees or compensation from product sales. Fee-for-service advisors have fewer inherent conflicts of interest, and they generally provide more comprehensive advice.
+              </p>
+        </div>
+    </div>
+
+    <div class="row d-flex bg-black">
+        <div class="col-12">
+            <p class="footer">
+                ©2018 by Navi Financial Consulting Ltd
+              </p>
+        </div>
     </div>
 </div>

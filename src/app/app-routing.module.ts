@@ -13,7 +13,7 @@ import { LandingComponent } from './landing/landing/landing.component';
 const routes: Routes = [
   {path: 'main', component: MainFormComponent, canActivate: [AuthGuard]},
   {path: 'blog', component: BlogMainComponent},
-  {path: '', redirectTo: '/main', pathMatch: 'full' },
+  {path: '', redirectTo: '/landing', pathMatch: 'full' },
   {path: 'post/:id', component: BlogPostDetailsComponent},
   {path: 'new_post', component: NewBlogPostComponent},
   {path: 'categories', component: CategoriesMainComponent},
