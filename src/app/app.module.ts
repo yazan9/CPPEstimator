@@ -24,6 +24,10 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LandingComponent } from './landing/landing/landing.component';
 import { NavComponent } from './nav/nav.component';
+import { ChildBenefitPeriodsComponent } from './components/child-benefit-periods/child-benefit-periods.component';
+import { DisabilityPeriodsComponent } from './components/disability-periods/disability-periods.component';
+import { NewChildBenefitComponent } from './Modals/new-child-benefit/new-child-benefit.component';
+import { NewDisabilityPeriodComponent } from './Modals/new-disability-period/new-disability-period.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,11 @@ import { NavComponent } from './nav/nav.component';
     LoginComponent,
     RegisterComponent,
     LandingComponent,
-    NavComponent
+    NavComponent,
+    ChildBenefitPeriodsComponent,
+    DisabilityPeriodsComponent,
+    NewChildBenefitComponent,
+    NewDisabilityPeriodComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +69,9 @@ import { NavComponent } from './nav/nav.component';
     AddScenarioModalComponent,
     CategoriesManagerComponent,
     CategoryDeleteComponent,
-    CategoryUpdateComponent
+    CategoryUpdateComponent,
+    NewChildBenefitComponent,
+    NewDisabilityPeriodComponent
   ]
 })
 export class AppModule { }

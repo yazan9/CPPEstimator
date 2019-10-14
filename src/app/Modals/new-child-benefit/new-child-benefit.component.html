@@ -1,0 +1,109 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="ChildrenContentModal">New Child Benefit Information</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group row">
+        <div class="col-sm-12">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ChildBenefitModes" id="FullMode" value="FullMode" [(ngModel)] = "ChildInputType">
+                <label class="form-check-label" for="FullMode">
+                  Use birth/adoption to age 7
+                </label>
+              </div>
+        </div>            
+       </div>
+
+       <div class="form-group row">
+         <div class="col-sm-1"></div>
+          <label for="ChildName" class="col-sm-5 col-form-label">Name:</label>
+         <div class="col-sm-6">
+            <input type="text" [(ngModel)] = "NewChild.Name" 
+            class="form-control" name="ChildNameInput" 
+            id="ChildNameInput" aria-describedby="ChildNameInputHelp" placeholder="Name"
+            [disabled] = "ChildInputType === 'PartialMode'">
+         </div>
+       </div>
+
+       <div class="form-group row">
+          <div class="col-sm-1"></div>
+           <label for="ChildBirthDate" class="col-sm-5 col-form-label">Birthday (YYYY-MM):</label>
+          <div class="col-sm-6">
+              <input type="text" [(ngModel)] = "NewChild.BirthDate" 
+              pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="BirthDateInput" 
+              id="BirthDateInput" aria-describedby="BirthDateInputHelp" placeholder="YYYY-MM"
+              [disabled] = "ChildInputType === 'PartialMode'">
+          </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+             <label for="ChildAdoptionDate" class="col-sm-5 col-form-label">Adoption (YYYY-MM):</label>
+            <div class="col-sm-6">
+                <input type="text" [(ngModel)] = "NewChild.AdoptionDate" 
+        pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="AdotpionDateInput" 
+        id="AdotpionDateInput" aria-describedby="AdotpionDateInputHelp" placeholder="YYYY-MM (Optional)"
+        [disabled] = "ChildInputType === 'PartialMode'">
+            </div>
+          </div>
+
+
+       
+      
+      
+     
+
+          <div class="form-group row">
+              <div class="col-sm-12">
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="ChildBenefitModes" id="PartialMode" value="PartialMode" checked [(ngModel)] = "ChildInputType" disabled>
+                      <label class="form-check-label" for="FullMode">
+                        Use start and end dates
+                      </label>
+                    </div>
+              </div>            
+             </div>
+      
+             <div class="form-group row">
+               <div class="col-sm-1"></div>
+                <label for="ChildSelect" class="col-sm-5 col-form-label">Child:</label>
+               <div class="col-sm-6">
+                  <select [(ngModel)] = "NewChild.Name" 
+                  class="form-control" name="ChildSelect" 
+                  id="ChildSelect" aria-describedby="ChildSelectHelp" 
+                  [disabled] = "ChildInputType === 'FullMode'">
+                </select>
+               </div>
+             </div>
+      
+             <div class="form-group row">
+                <div class="col-sm-1"></div>
+                 <label for="BenefitPartialStart" class="col-sm-5 col-form-label">Benefit start (YYYY-MM):</label>
+                <div class="col-sm-6">
+                    <input type="text" [(ngModel)] = "NewChild.BirthDate" 
+                    pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="BenefitPartialStart" 
+                    id="BenefitPartialStart" aria-describedby="BenefitPartialStartHelp" placeholder="YYYY-MM"
+                    [disabled] = "ChildInputType === 'FullMode'">
+                </div>
+              </div>
+      
+              <div class="form-group row">
+                  <div class="col-sm-1"></div>
+                   <label for="BenefitPartialEnd" class="col-sm-5 col-form-label">Benefit end (YYYY-MM):</label>
+                  <div class="col-sm-6">
+                      <input type="text" [(ngModel)] = "NewChild.AdoptionDate" 
+              pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="BenefitPartialEnd" 
+              id="BenefitPartialEnd" aria-describedby="BenefitPartialEndHelp" placeholder="YYYY-MM"
+              [disabled] = "ChildInputType === 'FullMode'">
+                  </div>
+                </div>
+
+      
+          </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="Save()">Add</button>
+  </div>

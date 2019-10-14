@@ -1,0 +1,29 @@
+<fieldset class="border p-2 fieldset-bottom-margin">
+    <legend class="w-auto legend-text">Disability Periods</legend>
+   
+   <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Start</th>
+        <th scope="col">End</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let disabilityPeriod of DisabilityPeriods" (click)="onSelect(disabilityPeriod)" 
+      [class.table-primary]="disabilityPeriod === selectedDisabilityPeriod">
+        <td>{{disabilityPeriod.StartDisability.toISOString().substring(0,7)}}</td>
+        <td>{{disabilityPeriod.EndDisability.toISOString().substring(0,7)}}</td>
+        <td>
+          <button type="button" class="close" aria-label="Close" (click)="onDelete(disabilityPeriod)">
+                <span aria-hidden="true">&times;</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+      <button type="button" class="btn btn-outline-primary margin-1" (click)="openModal()">Add</button>
+      <button type="button" class="btn btn-outline-dark margin-1" (click)="Clear()">Clear</button>
+   </div>
+   </fieldset>

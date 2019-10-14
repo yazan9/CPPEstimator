@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="BenefitScenariosContentModal">New Disability Period</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="StartDisabilityPeriod">Disability Start (YYYY-MM):</label>
+        <input type="text" [(ngModel)] = "NewDisabilityPeriod.StartDisability" 
+        pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="StartDisabilityInput" 
+        id="StartDisabilityInput" aria-describedby="StartDisabilityInputHelp" placeholder="YYYY-MM">
+      </div>
+      <div class="form-group">
+        <label for="EndDisabilityPeriod">Disability End (YYYY-MM):</label>
+        <input type="text" [(ngModel)] = "NewDisabilityPeriod.EndDisability" 
+        pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="EndDisabilityInput" 
+        id="EndDisabilityInput" aria-describedby="EndDisabilityInputHelp" placeholder="YYYY-MM">
+      </div>
+          </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="Save()">Add</button>
+  </div>

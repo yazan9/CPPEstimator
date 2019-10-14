@@ -79,6 +79,7 @@ export class BenefitScenariosComponent implements OnInit {
   
   Clear()
   {
-    this.benefitScenarios = [];
+    this.Profile.Scenarios = [];
+    this.benefitScenarios = this.Profile.Scenarios;
   }
 }

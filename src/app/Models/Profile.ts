@@ -1,11 +1,15 @@
 import { Earning } from '../Earning';
 import { BenefitScenario } from '../BenefitScenario';
+import { DisabilityPeriod } from './DisabilityPeriod';
+import { Child } from './Child';
 
 export class Profile {
     DateOfBirth: Date;
     Scenarios: BenefitScenario[];
     Name: string;
     Earnings: Earning[];
+    DisabilityPeriods: DisabilityPeriod[];
+    Children:Child[];
 
     constructor()
     {
@@ -13,5 +17,7 @@ export class Profile {
         this.Scenarios = [];
         this.Name = "";
         this.Earnings = [];
+        this.DisabilityPeriods = [];
+        this.Children = [];
     }
 }

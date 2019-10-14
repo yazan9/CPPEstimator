@@ -80,6 +80,8 @@ export class CalculatorService {
       headers: this.getHeaders(), params:params
     };
 
+    console.log(this.Profile.DisabilityPeriods);
+
     return this.http.get<number>(this.CalculatorUrl + '/scenario_benefits', httpOptions);
   }
 
