@@ -28,7 +28,6 @@ export interface TokenPayload {
 })
 export class AuthenticationService {
 
-  private token: string;
   private AuthenticationURL:string
   env = environment;
   httpOptions = {
@@ -41,19 +40,15 @@ export class AuthenticationService {
    }
   
    private saveToken(token: string): void {
+    localStorage.removeItem('mean-token');
     localStorage.setItem('mean-token', token);
-    this.token = token;
   }
 
   public getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('mean-token');
-    }
-    return this.token;
+    return localStorage.getItem('mean-token');
   }
 
   public logout(): void {
-    this.token = '';
     window.localStorage.removeItem('mean-token');
     this.router.navigateByUrl('/landing');
   }

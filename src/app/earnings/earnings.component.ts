@@ -17,7 +17,9 @@ export class EarningsComponent implements OnInit, OnDestroy {
   Earnings: Earning[];
   CurrentYear: number;
   subscription: Subscription;
+  DOBValidySubscription: Subscription;
   Profile: Profile;
+  IsValidDateOfBirth:boolean = false;
 
   loadingMaxAllResponse:boolean = false;
   loadingMaxYearResponse:boolean = false;
@@ -32,11 +34,25 @@ export class EarningsComponent implements OnInit, OnDestroy {
         this.YearOfBirth = DOB.getFullYear();
         this.MonthOfBirth = DOB.getMonth();
         this.CurrentYear = new Date().getFullYear();
+
+        //clear all earnings, if any
+        this.Profile.Earnings = [];
         this.Earnings = this.Profile.Earnings;
         for (let i = this.YearOfBirth + 18; i <= this.YearOfBirth+70; i++) {
           this.Earnings.push(new Earning({Year: i.toString(), Value: 0}));
     }
     });
+
+    this.DOBValidySubscription = CalculatorService.CheckValidDateOfBirth$.subscribe(
+      (isValidDateOfBirth) => {
+        if(!isValidDateOfBirth)
+        {
+        this.Profile.Earnings = [];
+        this.Earnings = this.Profile.Earnings;
+        }
+        this.IsValidDateOfBirth = isValidDateOfBirth;
+      }
+    );
     }
 
   ngOnInit() {
@@ -46,6 +62,7 @@ export class EarningsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     this.subscription.unsubscribe();
+    this.DOBValidySubscription.unsubscribe();
   }
 
   ToggleMaximize(earning: Earning, event:any):void{
@@ -59,6 +76,8 @@ export class EarningsComponent implements OnInit, OnDestroy {
         earning.Value = +maxEarning;
         earning.Selected = true;
         this.loadingMaxYearResponse = false;
+        console.log("Recalculating:001");
+        this.CalculatorService.recalculateBenefitScenarios();
       },
         error => {
           this.loadingMaxYearResponse = false;
@@ -83,6 +102,8 @@ export class EarningsComponent implements OnInit, OnDestroy {
         earning.Selected = true;
       });
       this.loadingMaxAllResponse = false;
+      console.log("Recalculating:002");
+      this.CalculatorService.recalculateBenefitScenarios();
     },
     error => {
       this.loadingMaxAllResponse = false;
@@ -92,6 +113,12 @@ export class EarningsComponent implements OnInit, OnDestroy {
       }
     }
     );
+  }
+
+  onEarningChange()
+  {
+    this.CalculatorService.recalculateBenefitScenarios();
+    console.log("Recalulcating:003");
   }
 
   ClearAll(): void{

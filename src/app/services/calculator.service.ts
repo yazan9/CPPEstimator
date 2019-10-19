@@ -14,36 +14,47 @@ export class CalculatorService {
   env = environment;
 
   Profile: Profile;
+  IsValidDateOfBirth:boolean = false;
 
   // Observable string sources
   private DateOfBirthSource = new Subject<Date>();
+  private ValidateDateOfBirthSource = new Subject<boolean>();
+  private UpdatedBenefitValuesSource = new Subject<number[]>();
   
   // Observable string streams
   DateOFBirth$ = this.DateOfBirthSource.asObservable();
+  CheckValidDateOfBirth$ = this.ValidateDateOfBirthSource.asObservable();
+  UpdatedBenefitValues$ = this.UpdatedBenefitValuesSource.asObservable();
   
-  // Service Commands
-  SetDateOfBirth(DOB: Date)
-  {
-    this.Profile.DateOfBirth = DOB;
-    this.DateOfBirthSource.next(DOB);
-  }
-
-  getProfile(): Profile
-  {
-    return this.Profile;
-  }
-
   constructor(private http: HttpClient, private authService : AuthenticationService) {
     this.CalculatorUrl = `${this.env.backendUri}/calculator`;
     this.Profile = new Profile();
   }
 
-  private getHeaders()
+  // Service Commands
+  SetDateOfBirth(DOB: Date)
   {
-    return new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': `Bearer ${this.authService.getToken()}`
-    })
+    this.Profile.DateOfBirth = DOB;
+    this.IsValidDateOfBirth = true;
+    this.DateOfBirthSource.next(DOB);
+    this.ValidateDateOfBirthSource.next(true);
+  }
+
+  InvalidateDateOfBirth()
+  {
+    this.Profile.Earnings = [];
+
+    //send the signal only if changed from true to false
+    if(this.IsValidDateOfBirth)
+    {
+      this.ValidateDateOfBirthSource.next(false);
+      this.IsValidDateOfBirth = false;
+    }
+  }
+
+  getProfile(): Profile
+  {
+    return this.Profile;
   }
 
   getYearMax(Year:string): Observable<Number>
@@ -74,15 +85,43 @@ export class CalculatorService {
   getBenefitsForScenario()
   {
     let params:HttpParams = new HttpParams()
-      .set("Profile", JSON.stringify(this.Profile));
+    .set("Profile", JSON.stringify(this.Profile)).set("BulkCalculation", JSON.stringify(false));
 
     const httpOptions = {
       headers: this.getHeaders(), params:params
     };
 
-    console.log(this.Profile.DisabilityPeriods);
+    return this.http.get<number[]>(this.CalculatorUrl + '/scenario_benefits', httpOptions);
+  }
 
-    return this.http.get<number>(this.CalculatorUrl + '/scenario_benefits', httpOptions);
+  recalculateBenefitScenarios()
+  {
+    if(this.Profile.Scenarios.length == 0)
+      return;
+    
+    let params:HttpParams = new HttpParams()
+      .set("Profile", JSON.stringify(this.Profile)).set("BulkCalculation", JSON.stringify(true));
+
+    const httpOptions = {
+      headers: this.getHeaders(), params:params
+    };
+
+    this.http.get<number[]>(this.CalculatorUrl + '/scenario_benefits', httpOptions).subscribe(
+      (benefitValues) => {
+        this.UpdatedBenefitValuesSource.next(benefitValues);
+      }, 
+      (err) => {
+
+      }
+    );
+  }
+
+  private getHeaders()
+  {
+    return new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${this.authService.getToken()}`
+    })
   }
 
 }

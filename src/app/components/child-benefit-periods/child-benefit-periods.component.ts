@@ -19,11 +19,23 @@ export class ChildBenefitPeriodsComponent implements OnInit {
   NewChild: Child;
   subscription: Subscription;
   Profile: Profile;
+  IsValidDateOfBirth:boolean = false;
 
   constructor(
     private modalService: NgbModal,
     private calculatorService: CalculatorService
-    ) { }
+    ) { 
+      this.subscription = calculatorService.CheckValidDateOfBirth$.subscribe(
+        (isValidDateOfBirth) => {
+          if(!isValidDateOfBirth)
+          {
+          this.Profile.Children = [];
+          this.Children = this.Profile.Children;
+          }
+          this.IsValidDateOfBirth = isValidDateOfBirth;
+        }
+      );
+    }
 
   ngOnInit() {
       this.NewChild = new Child();
@@ -39,13 +51,15 @@ export class ChildBenefitPeriodsComponent implements OnInit {
     const index: number = this.Children.indexOf(child);
     if (index !== -1) {
         this.Children.splice(index, 1);
-    }      
+        this.calculatorService.recalculateBenefitScenarios();     
+    }
   }
 
   Clear()
   {
     this.Profile.Children = [];
     this.Children = this.Profile.Children;
+    this.calculatorService.recalculateBenefitScenarios();
   }
 
   openModal()
@@ -87,10 +101,15 @@ export class ChildBenefitPeriodsComponent implements OnInit {
       this.NewChild.StartBenefit.setMonth(this.NewChild.AdoptionDate.getMonth()+1);
     }
 
-    console.log(this.NewChild);
-
     this.Profile.Children.push(this.NewChild);
+
+    this.calculatorService.recalculateBenefitScenarios();
     
     this.NewChild = new Child();
+  }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
   }
 }

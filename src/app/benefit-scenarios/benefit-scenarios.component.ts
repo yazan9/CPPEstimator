@@ -19,13 +19,34 @@ export class BenefitScenariosComponent implements OnInit {
   selectedScenario: BenefitScenario;
   NewScenario: BenefitScenario;
   subscription: Subscription;
+  updatedCalculationsSubscription:Subscription;
   Profile: Profile;
+  IsValidDateOfBirth:boolean
 
   constructor(
     private modalService: NgbModal,
     private CalculatorService: CalculatorService,
     private router: Router
-    ) { }
+    ) { 
+      this.subscription = CalculatorService.CheckValidDateOfBirth$.subscribe(
+        (isValidDateOfBirth) => {
+          if(!isValidDateOfBirth)
+          {
+          this.Profile.Scenarios = [];
+          this.benefitScenarios = this.Profile.Scenarios;
+          }
+          this.IsValidDateOfBirth = isValidDateOfBirth;
+        }
+      );
+
+      this.updatedCalculationsSubscription = CalculatorService.UpdatedBenefitValues$.subscribe(
+        (updatedBenefits) => {
+          this.Profile.Scenarios.forEach((scenario, index) => {
+            scenario.BenefitValue = updatedBenefits[index];
+          });
+        }
+      );
+    }
 
   ngOnInit() {
     this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
@@ -62,9 +83,9 @@ export class BenefitScenariosComponent implements OnInit {
     this.NewScenario.StopWork = new Date(this.NewScenario.StopWork);
     this.Profile.Scenarios.push(this.NewScenario);
 
-    this.CalculatorService.getBenefitsForScenario().subscribe(calculatedBenefits => {
+    this.CalculatorService.getBenefitsForScenario().subscribe((calculatedBenefits) => {
       this.NewScenario = this.Profile.Scenarios.pop();
-      this.NewScenario.BenefitValue = calculatedBenefits;
+      this.NewScenario.BenefitValue = calculatedBenefits.pop();
       this.benefitScenarios.push(this.NewScenario);
       this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
     },

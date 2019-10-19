@@ -19,11 +19,23 @@ export class DisabilityPeriodsComponent implements OnInit {
   NewDisabilityPeriod: DisabilityPeriod;
   subscription: Subscription;
   Profile: Profile;
+  IsValidDateOfBirth:boolean = false;
 
   constructor(
     private modalService: NgbModal,
     private calculatorService: CalculatorService
-    ) { }
+    ) {
+      this.subscription = calculatorService.CheckValidDateOfBirth$.subscribe(
+        (isValidDateOfBirth) => {
+          if(!isValidDateOfBirth)
+          {
+          this.Profile.DisabilityPeriods = [];
+          this.DisabilityPeriods = this.Profile.DisabilityPeriods;
+          }
+          this.IsValidDateOfBirth = isValidDateOfBirth;
+        }
+      );
+     }
 
   ngOnInit() {
     this.NewDisabilityPeriod = {StartDisability: null, EndDisability: null};
@@ -39,6 +51,7 @@ export class DisabilityPeriodsComponent implements OnInit {
     const index: number = this.DisabilityPeriods.indexOf(disabilityPeriod);
     if (index !== -1) {
         this.DisabilityPeriods.splice(index, 1);
+        this.calculatorService.recalculateBenefitScenarios();
     }      
   }
 
@@ -46,6 +59,7 @@ export class DisabilityPeriodsComponent implements OnInit {
   {
     this.Profile.DisabilityPeriods = [];
     this.DisabilityPeriods = this.Profile.DisabilityPeriods;
+    this.calculatorService.recalculateBenefitScenarios();
   }
 
   openModal()
@@ -67,7 +81,14 @@ export class DisabilityPeriodsComponent implements OnInit {
     this.NewDisabilityPeriod.EndDisability = new Date(this.NewDisabilityPeriod.EndDisability);
 
     this.Profile.DisabilityPeriods.push(this.NewDisabilityPeriod);
+
+    this.calculatorService.recalculateBenefitScenarios();
     
     this.NewDisabilityPeriod = {StartDisability: null, EndDisability: null};
+  }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
   }
 }

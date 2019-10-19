@@ -23,7 +23,8 @@
       </tr>
   </table>
   <div>
-      <button type="button" class="btn btn-outline-primary margin-1" (click)="openModal()">Add</button>
+      <button type="button" class="btn btn-outline-primary margin-1" (click)="openModal()" 
+      [disabled]="!IsValidDateOfBirth">Add</button>
       <button type="button" class="btn btn-outline-dark margin-1" (click)="Clear()">Clear</button>
    </div>
    </fieldset>

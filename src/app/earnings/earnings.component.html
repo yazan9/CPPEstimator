@@ -6,7 +6,7 @@
  <div *ngFor="let earning of Earnings" class="form-group row">
     <label for="InputEarning" class="col-sm-4 col-form-label">Age {{CurrentYear-YearOfBirth- (CurrentYear-earning.Year) }} ({{earning.Year}}) $ </label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" name = "InputEarning" id="InputEarning" placeholder="Earning" [(ngModel)] = "earning.Value" (input)="RemoveSelection(earning)">
+      <input type="text" class="form-control" name = "InputEarning" id="InputEarning" placeholder="Earning" [(ngModel)] = "earning.Value" (input)="RemoveSelection(earning)" (change)="onEarningChange()">
     </div>
     <div class="col-sm-2 align-middle">
       <input type="checkbox" class="form-check-input" name= "EarningSelection" id="Max" (change)="ToggleMaximize(earning, $event)" [(ngModel)] = "earning.Selected" [disabled]="loadingMaxYearResponse && toggledYear === earning.Year">
@@ -17,7 +17,8 @@
   </div>
   
   <div>
-    <button type="button" class="btn btn-outline-primary margin-1" (click)="MaximizeAll()" [disabled]="loadingMaxAllResponse || YearOfBirth === undefined">
+    <button type="button" class="btn btn-outline-primary margin-1" (click)="MaximizeAll()" 
+    [disabled]="!IsValidDateOfBirth || YearOfBirth === undefined">
         <span *ngIf="loadingMaxAllResponse" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Maximize
     </button>

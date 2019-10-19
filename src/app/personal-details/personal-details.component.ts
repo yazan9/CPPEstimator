@@ -22,6 +22,10 @@ export class PersonalDetailsComponent implements OnInit {
     {
       this.CalculatorService.SetDateOfBirth(new Date(this.DateOfBirth));
     }
+    else
+    {
+      this.CalculatorService.InvalidateDateOfBirth();
+    }
   }
   
   VerifyDateOfBirth(): boolean
