@@ -27,7 +27,7 @@ export class AdminComponent implements OnInit {
   private _success = new Subject<string>();
   errorMessage: string;
 
-  constructor(private userService: UserService, private modalService: NgbModal) {
+  constructor(public userService: UserService, private modalService: NgbModal) {
     this.users$ = userService.users$;
     this.total$ = userService.total$;
    }
