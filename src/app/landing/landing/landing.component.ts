@@ -7,10 +7,12 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./landing.component.sass']
 })
 export class LandingComponent implements OnInit {
+  isAdmin: boolean;
 
   constructor(public auth: AuthenticationService) { }
 
   ngOnInit() {
+    this.isAdmin = this.auth.isAdmin();
   }
 
 }

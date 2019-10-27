@@ -9,6 +9,7 @@ import {AuthGuard} from './auth/auth.guard'
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LandingComponent } from './landing/landing/landing.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 const routes: Routes = [
   {path: 'main', component: MainFormComponent, canActivate: [AuthGuard]},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'categories', component: CategoriesMainComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'landing', component: LandingComponent}
+  {path: 'landing', component: LandingComponent},
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
   ];
 
 @NgModule({

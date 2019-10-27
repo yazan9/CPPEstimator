@@ -11,6 +11,8 @@ export interface UserDetails {
   id: string;
   email: string;
   username: string;
+  exp: number;
+  isAdmin: boolean;
 }
 
 interface TokenResponse {
@@ -69,35 +71,23 @@ export class AuthenticationService {
   public isLoggedIn(): boolean {
     const user = this.getUserDetails();
     if (user) {
-      //return user.exp > Date.now() / 1000;
-      return true;
+      console.log(user.exp);
+      console.log(Date.now()/1000);
+      return user.exp > Date.now() / 1000;
     } 
     else {
       return false;
     }
   }
-  
-  private request(method: 'post'|'get', type: 'login'|'register'|'profile', user?: TokenPayload): Observable<any> {
-    let base;
 
-    if (method === 'post') {
-      base = this.http.post(`https://track-my-expenses-chilivote.c9users.io:8081/api/${type}`, user)
-      .pipe(
-      catchError(this.handleError('register', [])));
-    } else {
-      base = this.http.get(`https://track-my-expenses-chilivote.c9users.io:8081/api/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+  public isAdmin():boolean {
+    const user = this.getUserDetails();
+    if (user) {
+      return user.isAdmin
+    } 
+    else {
+      return false;
     }
-
-    const request = base.pipe(
-    map((data: TokenResponse) => {
-      if (data.token) {
-        this.saveToken(data.token);
-      }
-      return data;
-      })
-    );
-    
-    return request;
   }
   
   public register(user: TokenPayload): Observable<any> {

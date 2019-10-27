@@ -1,0 +1,67 @@
+<app-nav></app-nav>
+<div class="container">
+<div class="row">
+<ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+<h2>Welcome admin</h2>
+</div>
+<div class="row">
+  <div class = "col">
+<form>
+  <div class="form-group form-inline">
+      Search by email or username: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="userService.searchTerm"/>
+      <span class="ml-3" *ngIf="userService.loading$ | async">Loading...</span>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col" class sortable="email" (sort)="onSort($event)">Email</th>
+      <th scope="col" sortable="username" (sort)="onSort($event)">Username</th>
+      <th scope="col" sortable="active" (sort)="onSort($event)">Active</th>
+      <th scope="col" sortable="admin" (sort)="onSort($event)">Admin</th>
+      <th scope="col" sortable="created_at" (sort)="onSort($event)">Created At</th>
+      <th scope="col" sortable="updated_at" (sort)="onSort($event)">Updated At</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users$ | async">
+      <th scope="row">{{ user.id }}</th>
+      <td>
+        <ngb-highlight [result]="user.email" [term]="userService.searchTerm"></ngb-highlight>
+      </td>
+      <td><ngb-highlight [result]="user.username" [term]="userService.searchTerm"></ngb-highlight></td>
+      <td>{{user.active}}</td>
+      <td>{{user.admin}}</td>
+      <td>{{user.created_at | date:'medium' }}</td>
+      <td>{{user.updated_at | date:'medium'}}</td>
+      <td>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button *ngIf="!user.active" type="button" class="btn btn-light" (click)="onActivate(user)">Activate</button>
+          <button *ngIf="user.active" type="button" class="btn btn-secondary" (click)="onDeactivate(user)">Deactivate</button>
+          <button *ngIf="!user.admin" type="button" class="btn btn-light" (click)="onPromote(user)">Promote</button>
+          <button *ngIf="user.admin" type="button" class="btn btn-secondary" (click)="onDemote(user)">Demote</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete(user)">Delete</button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [collectionSize]="total$ | async" [(page)]="userService.page" [pageSize]="userService.pageSize">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="userService.pageSize">
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="25">25 items per page</option>
+      <option [ngValue]="50">50 items per page</option>
+    </select>
+  </div>
+
+</form>
+</div>
+</div>
+</div>

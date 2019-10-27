@@ -9,7 +9,7 @@ import { MainFormComponent } from './main-form/main-form.component';
 import { PersonalDetailsComponent } from './personal-details/personal-details.component';
 import { BenefitScenariosComponent } from './benefit-scenarios/benefit-scenarios.component';
 import { EarningsComponent } from './earnings/earnings.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddScenarioModalComponent } from './add-scenario-modal/add-scenario-modal.component';
 import { BlogMainComponent } from './blog-main/blog-main.component';
 import { BlogThumbnailComponent } from './blog-thumbnail/blog-thumbnail.component';
@@ -28,6 +28,14 @@ import { ChildBenefitPeriodsComponent } from './components/child-benefit-periods
 import { DisabilityPeriodsComponent } from './components/disability-periods/disability-periods.component';
 import { NewChildBenefitComponent } from './Modals/new-child-benefit/new-child-benefit.component';
 import { NewDisabilityPeriodComponent } from './Modals/new-disability-period/new-disability-period.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { NgbdSortableHeader } from './directives/sortable.directive';
+import { DecimalPipe } from '@angular/common';
+import { UserActivateComponent } from './Modals/user-activate/user-activate.component';
+import { UserPromoteComponent } from './Modals/user-promote/user-promote.component';
+import { UserDeleteComponent } from './Modals/user-delete/user-delete.component';
+import { UserDemoteComponent } from './Modals/user-demote/user-demote.component';
+import { UserDeactivateComponent } from './Modals/user-deactivate/user-deactivate.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +60,14 @@ import { NewDisabilityPeriodComponent } from './Modals/new-disability-period/new
     ChildBenefitPeriodsComponent,
     DisabilityPeriodsComponent,
     NewChildBenefitComponent,
-    NewDisabilityPeriodComponent
+    NewDisabilityPeriodComponent,
+    AdminComponent,
+    NgbdSortableHeader,
+    UserActivateComponent,
+    UserPromoteComponent,
+    UserDeleteComponent,
+    UserDemoteComponent,
+    UserDeactivateComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +77,7 @@ import { NewDisabilityPeriodComponent } from './Modals/new-disability-period/new
     CKEditorModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent],
   
   entryComponents: [
@@ -71,7 +86,12 @@ import { NewDisabilityPeriodComponent } from './Modals/new-disability-period/new
     CategoryDeleteComponent,
     CategoryUpdateComponent,
     NewChildBenefitComponent,
-    NewDisabilityPeriodComponent
+    NewDisabilityPeriodComponent,
+    UserDeleteComponent,
+    UserActivateComponent,
+    UserPromoteComponent,
+    UserDeactivateComponent,
+    UserDemoteComponent
   ]
 })
 export class AppModule { }
