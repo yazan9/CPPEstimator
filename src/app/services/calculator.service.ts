@@ -4,6 +4,7 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Profile } from '../Models/Profile';
 import { AuthenticationService } from './authentication.service';
+import { BenefitScenario } from '../BenefitScenario';
 
 @Injectable({
   providedIn: 'root'
@@ -115,6 +116,19 @@ export class CalculatorService {
       }
     );
   }
+
+  getGridScenarios(gridProfile:Profile):Observable<number[]>
+  {    
+    let params:HttpParams = new HttpParams()
+      .set("Profile", JSON.stringify(gridProfile)).set("BulkCalculation", JSON.stringify(true));
+
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.post<number[]>(this.CalculatorUrl + '/grid_scenarios', gridProfile, httpOptions);
+  }
+  
 
   private getHeaders()
   {

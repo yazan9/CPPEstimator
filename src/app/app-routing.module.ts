@@ -10,6 +10,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LandingComponent } from './landing/landing/landing.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { BenefitsGridComponent } from './components/benefits-grid/benefits-grid.component';
 
 const routes: Routes = [
   {path: 'main', component: MainFormComponent, canActivate: [AuthGuard]},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'landing', component: LandingComponent},
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
+  {path: 'benefits_report', component: BenefitsGridComponent, canActivate: [AuthGuard]},
   ];
 
 @NgModule({

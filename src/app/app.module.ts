@@ -36,6 +36,7 @@ import { UserPromoteComponent } from './Modals/user-promote/user-promote.compone
 import { UserDeleteComponent } from './Modals/user-delete/user-delete.component';
 import { UserDemoteComponent } from './Modals/user-demote/user-demote.component';
 import { UserDeactivateComponent } from './Modals/user-deactivate/user-deactivate.component';
+import { BenefitsGridComponent } from './components/benefits-grid/benefits-grid.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { UserDeactivateComponent } from './Modals/user-deactivate/user-deactivat
     UserPromoteComponent,
     UserDeleteComponent,
     UserDemoteComponent,
-    UserDeactivateComponent
+    UserDeactivateComponent,
+    BenefitsGridComponent
   ],
   imports: [
     BrowserModule,
