@@ -14,7 +14,7 @@
     <tr *ngFor="let scenario of benefitScenarios" (click)="onSelect(scenario)" [class.table-primary]="scenario === selectedScenario">
       <td>{{scenario.StopWork.toISOString().substring(0,7)}}</td>
       <td>{{scenario.StartBenefit.toISOString().substring(0,7)}}</td>
-      <td>{{scenario.BenefitValue}}</td>
+      <td>{{scenario.BenefitValue.toFixed(2)}}</td>
       <td>
         <button type="button" class="close" aria-label="Close" (click)="onDelete(scenario)">
               <span aria-hidden="true">&times;</span>
