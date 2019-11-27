@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalculatorService } from '../services/calculator.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-personal-details',
@@ -20,7 +21,7 @@ export class PersonalDetailsComponent implements OnInit {
   onTextChange(searchValue: string): void {  
     if(this.VerifyDateOfBirth() === true)
     {
-      this.CalculatorService.SetDateOfBirth(new Date(this.DateOfBirth));
+      this.CalculatorService.SetDateOfBirth(moment(this.DateOfBirth).toDate());
     }
     else
     {

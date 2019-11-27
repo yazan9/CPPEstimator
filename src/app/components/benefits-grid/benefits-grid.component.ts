@@ -105,7 +105,7 @@ export class BenefitsGridComponent implements OnInit {
       for(let j = 60; j<=70; j++)
       {
         let scenario: BenefitScenario = new BenefitScenario();
-        let stopWorkMoment = moment(this.DateOfBirth);
+        let stopWorkMoment = moment(this.DateOfBirth.toISOString());
         scenario.StopWork = stopWorkMoment.add(i, 'years').toDate();
         let startBenefitsMoment = moment(this.DateOfBirth).add(1, 'month');
         scenario.StartBenefit = startBenefitsMoment.add(j, 'years').toDate();
