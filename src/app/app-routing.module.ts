@@ -11,6 +11,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LandingComponent } from './landing/landing/landing.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { BenefitsGridComponent } from './components/benefits-grid/benefits-grid.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 const routes: Routes = [
   {path: 'main', component: MainFormComponent, canActivate: [AuthGuard]},
@@ -24,6 +26,8 @@ const routes: Routes = [
   {path: 'landing', component: LandingComponent},
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
   {path: 'benefits_report', component: BenefitsGridComponent, canActivate: [AuthGuard]},
+  {path: 'forgot_password', component: ForgotPasswordComponent},
+  {path: 'reset_password/:hash', component: ResetPasswordComponent}
   ];
 
 @NgModule({

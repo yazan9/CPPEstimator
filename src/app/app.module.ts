@@ -37,6 +37,8 @@ import { UserDeleteComponent } from './Modals/user-delete/user-delete.component'
 import { UserDemoteComponent } from './Modals/user-demote/user-demote.component';
 import { UserDeactivateComponent } from './Modals/user-deactivate/user-deactivate.component';
 import { BenefitsGridComponent } from './components/benefits-grid/benefits-grid.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { BenefitsGridComponent } from './components/benefits-grid/benefits-grid.
     UserDeleteComponent,
     UserDemoteComponent,
     UserDeactivateComponent,
-    BenefitsGridComponent
+    BenefitsGridComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

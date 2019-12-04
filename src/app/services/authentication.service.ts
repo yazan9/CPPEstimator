@@ -104,6 +104,14 @@ export class AuthenticationService {
       );    
       return request;
   }
+
+  public resetPassword(email:string): Observable<any> {
+    return this.http.get(this.AuthenticationURL+'/reset_password/'+email);
+  }
+
+  public setNewPassword(hash:string, password:string):Observable<any> {
+    return this.http.post(this.AuthenticationURL+'/set_password/'+hash, password);
+  }
   
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

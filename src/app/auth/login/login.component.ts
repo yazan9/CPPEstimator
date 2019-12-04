@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenPayload, AuthenticationService } from 'src/app/services/authentication.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,19 +11,26 @@ export class LoginComponent implements OnInit {
 
   errorMessage = "";
   loadingResponse:boolean = false;
+  reset_password:boolean;
+
   
   credentials: TokenPayload = {
     email: '',
     password: ''
   };
 
-  constructor(private auth: AuthenticationService, private router: Router) {
+  constructor(private auth: AuthenticationService, private router: Router, private route: ActivatedRoute) {
     if(this.auth.isLoggedIn() === true){
-      //this.router.navigateByUrl(`/profile/${this.auth.getUserDetails().id}`);
+      this.router.navigate(['/main']);
     }
    }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      console.log(params.redirect);
+      console.log(params.redirect == 'reset_password');
+      this.reset_password = (params.redirect == 'reset_password');
+    });
   }
 
   login(loginForm : any) {
