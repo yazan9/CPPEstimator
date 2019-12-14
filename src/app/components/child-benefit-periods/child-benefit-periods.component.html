@@ -10,11 +10,14 @@
         <th scope="col"></th>
       </tr>
     </thead>
-    <tr *ngFor="let child of Children" (click)="onSelect(child)" 
+    <tr *ngFor="let child of Profile.Children" (click)="onSelect(child)" 
       [class.table-primary]="child === selectedChild">
+        <!-- <td>{{child.Name}}</td> -->
+        <!-- <td>{{child.StartBenefit.toISOString().substring(0,7)}}</td> -->
+        <!-- <td>{{child.EndBenefit.toISOString().substring(0,7)}}</td> -->
         <td>{{child.Name}}</td>
-        <td>{{child.StartBenefit.toISOString().substring(0,7)}}</td>
-        <td>{{child.EndBenefit.toISOString().substring(0,7)}}</td>
+        <td>{{showStartBenefit(child.BirthDate)}}</td>
+        <td>{{showEndBenefit(child.BirthDate)}}</td>
         <td>
           <button type="button" class="close" aria-label="Close" (click)="onDelete(child)">
                 <span aria-hidden="true">&times;</span>

@@ -4,7 +4,7 @@ import { Subscription }   from 'rxjs';
 import { CalculatorService } from '../services/calculator.service';
 import { Profile } from '../Models/Profile';
 import { Router } from '@angular/router';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-earnings',
   templateUrl: './earnings.component.html',
@@ -13,17 +13,17 @@ import { Router } from '@angular/router';
 export class EarningsComponent implements OnInit, OnDestroy {
   
   YearOfBirth: number
-  MonthOfBirth: number
-  Earnings: Earning[];
+  //Earnings: Earning[];
   CurrentYear: number;
-  subscription: Subscription;
-  DOBValidySubscription: Subscription;
   Profile: Profile;
   IsValidDateOfBirth:boolean = false;
-
   loadingMaxAllResponse:boolean = false;
   loadingMaxYearResponse:boolean = false;
   toggledYear:string;
+
+  subscription: Subscription;
+  DOBValidySubscription: Subscription;
+  profileSubscription:Subscription;
 
   constructor(
     private CalculatorService: CalculatorService,
@@ -32,14 +32,14 @@ export class EarningsComponent implements OnInit, OnDestroy {
     this.subscription = CalculatorService.DateOFBirth$.subscribe(
       DOB => {
         this.YearOfBirth = DOB.getFullYear();
-        this.MonthOfBirth = DOB.getMonth();
-        this.CurrentYear = new Date().getFullYear();
 
         //clear all earnings, if any
         this.Profile.Earnings = [];
-        this.Earnings = this.Profile.Earnings;
+
+        //point be reference
+        //this.Earnings = this.Profile.Earnings;
         for (let i = this.YearOfBirth + 18; i <= this.YearOfBirth+70; i++) {
-          this.Earnings.push(new Earning({Year: i.toString(), Value: 0}));
+          this.Profile.Earnings.push(new Earning({Year: i.toString(), Value: 0}));
     }
     });
 
@@ -48,21 +48,33 @@ export class EarningsComponent implements OnInit, OnDestroy {
         if(!isValidDateOfBirth)
         {
         this.Profile.Earnings = [];
-        this.Earnings = this.Profile.Earnings;
+        //this.Earnings = this.Profile.Earnings;
         }
         this.IsValidDateOfBirth = isValidDateOfBirth;
       }
     );
+
+    this.profileSubscription = this.CalculatorService.ProfileLoaded$.subscribe((profile)=>{
+      this.reloadProfile(profile);
+     })
     }
 
   ngOnInit() {
     this.Profile = this.CalculatorService.getProfile();    
+    this.CurrentYear = new Date().getFullYear();
   }
   
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     this.subscription.unsubscribe();
     this.DOBValidySubscription.unsubscribe();
+    this.profileSubscription.unsubscribe();
+  }
+
+  reloadProfile(profile:Profile){
+    this.YearOfBirth = moment(profile.DateOfBirth).year();
+    this.Profile = profile;
+    this.IsValidDateOfBirth = this.CalculatorService.isValidDateOfBirth();
   }
 
   ToggleMaximize(earning: Earning, event:any):void{
@@ -97,7 +109,7 @@ export class EarningsComponent implements OnInit, OnDestroy {
     this.loadingMaxAllResponse = true;
     this.CalculatorService.getMaximumEarnings()
     .subscribe(AllEarnings => {
-      this.Earnings.forEach((earning, i) => {
+      this.Profile.Earnings.forEach((earning, i) => {
         earning.Value = AllEarnings[i];
         earning.Selected = true;
       });
@@ -118,11 +130,10 @@ export class EarningsComponent implements OnInit, OnDestroy {
   onEarningChange()
   {
     this.CalculatorService.recalculateBenefitScenarios();
-    console.log("Recalulcating:003");
   }
 
   ClearAll(): void{
-    for(let earning of this.Earnings)
+    for(let earning of this.Profile.Earnings)
     {
       earning.Value = 0;
       earning.Selected = false;

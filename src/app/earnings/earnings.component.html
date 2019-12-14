@@ -3,7 +3,7 @@
  
   <div class="overflow-auto earnings-box"> 
 
- <div *ngFor="let earning of Earnings" class="form-group row">
+ <div *ngFor="let earning of Profile.Earnings" class="form-group row">
     <label for="InputEarning" class="col-sm-4 col-form-label">Age {{CurrentYear-YearOfBirth- (CurrentYear-earning.Year) }} ({{earning.Year}}) $ </label>
     <div class="col-sm-6">
       <input type="text" class="form-control" name = "InputEarning" id="InputEarning" placeholder="Earning" [(ngModel)] = "earning.Value" (input)="RemoveSelection(earning)" (change)="onEarningChange()">
@@ -18,7 +18,7 @@
   
   <div>
     <button type="button" class="btn btn-outline-primary margin-1" (click)="MaximizeAll()" 
-    [disabled]="!IsValidDateOfBirth || YearOfBirth === undefined">
+    [disabled]="!IsValidDateOfBirth">
         <span *ngIf="loadingMaxAllResponse" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Maximize
     </button>

@@ -39,6 +39,9 @@ import { UserDeactivateComponent } from './Modals/user-deactivate/user-deactivat
 import { BenefitsGridComponent } from './components/benefits-grid/benefits-grid.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { ProfileNameModalComponent } from './Modals/profile-name-modal/profile-name-modal.component';
+import { LoadProfileModalComponent } from './Modals/load-profile-modal/load-profile-modal.component';
+import { DeleteProfileComponent } from './Modals/delete-profile/delete-profile.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,10 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
     UserDeactivateComponent,
     BenefitsGridComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ProfileNameModalComponent,
+    LoadProfileModalComponent,
+    DeleteProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +103,10 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
     UserActivateComponent,
     UserPromoteComponent,
     UserDeactivateComponent,
-    UserDemoteComponent
+    UserDemoteComponent,
+    ProfileNameModalComponent,
+    LoadProfileModalComponent,
+    DeleteProfileComponent
   ]
 })
 export class AppModule { }

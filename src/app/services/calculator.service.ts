@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { Profile } from '../Models/Profile';
 import { AuthenticationService } from './authentication.service';
 import { BenefitScenario } from '../BenefitScenario';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,13 @@ export class CalculatorService {
   private DateOfBirthSource = new Subject<Date>();
   private ValidateDateOfBirthSource = new Subject<boolean>();
   private UpdatedBenefitValuesSource = new Subject<number[]>();
+  private ProfileSource = new Subject<Profile>();
   
   // Observable string streams
   DateOFBirth$ = this.DateOfBirthSource.asObservable();
   CheckValidDateOfBirth$ = this.ValidateDateOfBirthSource.asObservable();
   UpdatedBenefitValues$ = this.UpdatedBenefitValuesSource.asObservable();
+  ProfileLoaded$ = this.ProfileSource.asObservable();
   
   constructor(private http: HttpClient, private authService : AuthenticationService) {
     this.CalculatorUrl = `${this.env.backendUri}/calculator`;
@@ -52,10 +55,54 @@ export class CalculatorService {
       this.IsValidDateOfBirth = false;
     }
   }
+  
+  private VerifyDateOfBirth(DateOfBirth:string): boolean
+  {
+    var regEx = /^\d{4}-\d{2}$/;
+    if(!DateOfBirth.match(regEx)) return false;  // Invalid format
+    var d = new Date(DateOfBirth);
+    var dNum = d.getTime();
+    if(!dNum && dNum !== 0) return false; // NaN value, Invalid date
+    return d.toISOString().slice(0,7) === DateOfBirth;
+  }
+
+  public onTextChange(text:string): void {  
+    if(this.VerifyDateOfBirth(text) === true)
+    {
+      this.IsValidDateOfBirth = true;
+      this.SetDateOfBirth(moment(text).toDate());
+    }
+    else
+    {
+      this.InvalidateDateOfBirth();
+    }
+  }
+
+  public isValidDateOfBirth():boolean{
+    return this.IsValidDateOfBirth;
+  }
 
   getProfile(): Profile
   {
     return this.Profile;
+  }
+
+  reloadProfile(profile): void{
+    this.Profile = profile;
+    //remove the zone value from the BE
+    this.Profile.DateOfBirth = new Date(this.Profile.DateOfBirth);
+    //if this is a new profile
+    if(moment(profile.DateOfBirth).format('YYYY-MM') === moment(new Date()).format('YYYY-MM'))
+      this.IsValidDateOfBirth = false;
+    else
+      //this.SetDateOfBirth(moment(profile.DateOfBirth).toDate());
+      this.IsValidDateOfBirth = true;
+
+    this.ProfileSource.next(profile);
+  }
+
+  updateProfileId(id:number){
+    this.Profile.Id = id;
   }
 
   getYearMax(Year:string): Observable<Number>
@@ -129,7 +176,6 @@ export class CalculatorService {
     return this.http.post<number[]>(this.CalculatorUrl + '/grid_scenarios', gridProfile, httpOptions);
   }
   
-
   private getHeaders()
   {
     return new HttpHeaders({

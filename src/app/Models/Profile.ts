@@ -10,6 +10,8 @@ export class Profile {
     Earnings: Earning[];
     DisabilityPeriods: DisabilityPeriod[];
     Children:Child[];
+    Id:number;
+    ProfileName:string;
 
     constructor()
     {
@@ -19,5 +21,7 @@ export class Profile {
         this.Earnings = [];
         this.DisabilityPeriods = [];
         this.Children = [];
+        this.Id = -1;
+        this.ProfileName = "";
     }
 }

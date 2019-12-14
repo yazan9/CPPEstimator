@@ -18,10 +18,12 @@ export class BenefitScenariosComponent implements OnInit {
   benefitScenarios: BenefitScenario[];
   selectedScenario: BenefitScenario;
   NewScenario: BenefitScenario;
+  Profile: Profile;
+  IsValidDateOfBirth:boolean;
+
   subscription: Subscription;
   updatedCalculationsSubscription:Subscription;
-  Profile: Profile;
-  IsValidDateOfBirth:boolean
+  profileSubscription: Subscription;
 
   constructor(
     private modalService: NgbModal,
@@ -46,6 +48,10 @@ export class BenefitScenariosComponent implements OnInit {
           });
         }
       );
+
+      this.profileSubscription = this.CalculatorService.ProfileLoaded$.subscribe((profile)=>{
+        this.reloadProfile(profile);
+      })
     }
 
   ngOnInit() {
@@ -96,6 +102,11 @@ export class BenefitScenariosComponent implements OnInit {
       }
     }
     );
+  }
+
+  reloadProfile(profile:Profile){
+    this.Profile = profile;
+    this.IsValidDateOfBirth = this.CalculatorService.isValidDateOfBirth();
   }
   
   Clear()

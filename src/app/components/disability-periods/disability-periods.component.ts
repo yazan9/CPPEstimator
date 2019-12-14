@@ -6,6 +6,7 @@ import { DisabilityPeriod } from 'src/app/Models/DisabilityPeriod';
 import { Subscription } from 'rxjs';
 import { Profile } from 'src/app/Models/Profile';
 import { CalculatorService } from 'src/app/services/calculator.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-disability-periods',
@@ -14,12 +15,13 @@ import { CalculatorService } from 'src/app/services/calculator.service';
 })
 export class DisabilityPeriodsComponent implements OnInit {
 
-  DisabilityPeriods: DisabilityPeriod[];
   selectedDisabilityPeriod: DisabilityPeriod;
   NewDisabilityPeriod: DisabilityPeriod;
-  subscription: Subscription;
   Profile: Profile;
   IsValidDateOfBirth:boolean = false;
+
+  subscription: Subscription;
+  profileSubscription: Subscription;
 
   constructor(
     private modalService: NgbModal,
@@ -30,17 +32,20 @@ export class DisabilityPeriodsComponent implements OnInit {
           if(!isValidDateOfBirth)
           {
           this.Profile.DisabilityPeriods = [];
-          this.DisabilityPeriods = this.Profile.DisabilityPeriods;
           }
           this.IsValidDateOfBirth = isValidDateOfBirth;
         }
       );
+
+      this.profileSubscription = calculatorService.ProfileLoaded$.subscribe((profile)=>{
+        this.Profile = profile;
+        this.IsValidDateOfBirth = this.calculatorService.isValidDateOfBirth();
+      })
      }
 
   ngOnInit() {
     this.NewDisabilityPeriod = {StartDisability: null, EndDisability: null};
     this.Profile = this.calculatorService.getProfile();
-    this.DisabilityPeriods = this.Profile.DisabilityPeriods;
   }
 
   onSelect(disabilityPeriod: DisabilityPeriod): void {
@@ -48,9 +53,9 @@ export class DisabilityPeriodsComponent implements OnInit {
   }
   
   onDelete(disabilityPeriod: DisabilityPeriod): void {
-    const index: number = this.DisabilityPeriods.indexOf(disabilityPeriod);
+    const index: number = this.Profile.DisabilityPeriods.indexOf(disabilityPeriod);
     if (index !== -1) {
-        this.DisabilityPeriods.splice(index, 1);
+        this.Profile.DisabilityPeriods.splice(index, 1);
         this.calculatorService.recalculateBenefitScenarios();
     }      
   }
@@ -58,7 +63,6 @@ export class DisabilityPeriodsComponent implements OnInit {
   Clear()
   {
     this.Profile.DisabilityPeriods = [];
-    this.DisabilityPeriods = this.Profile.DisabilityPeriods;
     this.calculatorService.recalculateBenefitScenarios();
   }
 
@@ -87,8 +91,13 @@ export class DisabilityPeriodsComponent implements OnInit {
     this.NewDisabilityPeriod = {StartDisability: null, EndDisability: null};
   }
 
+  showPeriod(disabilityPeriod:Date){
+    return moment(disabilityPeriod).format('YYYY-MM');
+  }
+
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     this.subscription.unsubscribe();
+    this.profileSubscription.unsubscribe();
   }
 }

@@ -10,10 +10,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let disabilityPeriod of DisabilityPeriods" (click)="onSelect(disabilityPeriod)" 
+      <tr *ngFor="let disabilityPeriod of Profile.DisabilityPeriods" (click)="onSelect(disabilityPeriod)" 
       [class.table-primary]="disabilityPeriod === selectedDisabilityPeriod">
-        <td>{{disabilityPeriod.StartDisability.toISOString().substring(0,7)}}</td>
-        <td>{{disabilityPeriod.EndDisability.toISOString().substring(0,7)}}</td>
+        <td>{{showPeriod(disabilityPeriod.StartDisability)}}</td>
+        <td>{{showPeriod(disabilityPeriod.EndDisability)}}</td>
         <td>
           <button type="button" class="close" aria-label="Close" (click)="onDelete(disabilityPeriod)">
                 <span aria-hidden="true">&times;</span>

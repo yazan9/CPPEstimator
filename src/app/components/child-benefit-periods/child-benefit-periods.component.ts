@@ -6,6 +6,7 @@ import { Child } from 'src/app/Models/Child';
 import { Subscription } from 'rxjs';
 import { CalculatorService } from 'src/app/services/calculator.service';
 import { Profile } from 'src/app/Models/Profile';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-child-benefit-periods',
@@ -14,12 +15,13 @@ import { Profile } from 'src/app/Models/Profile';
 })
 export class ChildBenefitPeriodsComponent implements OnInit {
 
-  Children: Child[];
   selectedChild: Child;
   NewChild: Child;
-  subscription: Subscription;
   Profile: Profile;
   IsValidDateOfBirth:boolean = false;
+
+  subscription: Subscription;
+  profileSubscription: Subscription;
 
   constructor(
     private modalService: NgbModal,
@@ -30,17 +32,19 @@ export class ChildBenefitPeriodsComponent implements OnInit {
           if(!isValidDateOfBirth)
           {
           this.Profile.Children = [];
-          this.Children = this.Profile.Children;
           }
           this.IsValidDateOfBirth = isValidDateOfBirth;
         }
       );
+
+      this.profileSubscription = this.calculatorService.ProfileLoaded$.subscribe((profile)=>{
+        this.reloadProfile(profile);
+      })
     }
 
   ngOnInit() {
       this.NewChild = new Child();
       this.Profile = this.calculatorService.getProfile();
-      this.Children = this.Profile.Children;
   }
 
   onSelect(child: Child): void {
@@ -48,9 +52,9 @@ export class ChildBenefitPeriodsComponent implements OnInit {
   }
   
   onDelete(child: Child): void {
-    const index: number = this.Children.indexOf(child);
+    const index: number = this.Profile.Children.indexOf(child);
     if (index !== -1) {
-        this.Children.splice(index, 1);
+        this.Profile.Children.splice(index, 1);
         this.calculatorService.recalculateBenefitScenarios();     
     }
   }
@@ -58,7 +62,6 @@ export class ChildBenefitPeriodsComponent implements OnInit {
   Clear()
   {
     this.Profile.Children = [];
-    this.Children = this.Profile.Children;
     this.calculatorService.recalculateBenefitScenarios();
   }
 
@@ -72,6 +75,11 @@ export class ChildBenefitPeriodsComponent implements OnInit {
         this.ProcessNewChild();
       }}, (reason) => {}
   );
+  }
+
+  reloadProfile(profile:Profile){
+    this.Profile = profile;
+    this.IsValidDateOfBirth = this.calculatorService.isValidDateOfBirth();
   }
 
   ProcessNewChild()
@@ -111,5 +119,14 @@ export class ChildBenefitPeriodsComponent implements OnInit {
   ngOnDestroy() {
     // prevent memory leak when component destroyed
     this.subscription.unsubscribe();
+    this.profileSubscription.unsubscribe();
+  }
+
+  showStartBenefit(DOB:Date):string{
+    return moment(DOB).format('YYYY-MM');
+  }
+
+  showEndBenefit(DOB:Date):string{
+    return moment(DOB).add(83,'months').format('YYYY-MM');
   }
 }

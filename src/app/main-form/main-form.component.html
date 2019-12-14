@@ -1,22 +1,48 @@
 <app-nav></app-nav>
 <div class="container">
-<form>
-<div class="row">
-    <div class="col-sm-6">
-        <app-personal-details></app-personal-details>
-        <app-benefit-scenarios></app-benefit-scenarios>
-        <app-child-benefit-periods></app-child-benefit-periods>
-        <app-disability-periods></app-disability-periods>
-    </div>
-     <div class="col-sm-6">
-         <app-earnings></app-earnings>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <button (click)="generateFullReport()" class = "btn btn-primary">Generate Full Report</button>
-        <br/><br/>
-    </div>
-</div>
-</form>
+    <form>
+        <div class="row">
+            <div class="col-sm-12">
+                <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}
+                </ngb-alert>
+                <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}
+                </ngb-alert>
+                <div *ngIf="activeProfile" class="alert alert-primary" role="alert">
+                    <span class="alert-link">Active Profile: </span>{{activeProfile.ProfileName}}
+                </div>
+                <div ngbDropdown class="d-inline-block btn-margin-1">
+                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Profile</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button ngbDropdownItem (click)="newProfile()">New</button>
+                            <div class="dropdown-divider"></div>
+                            <button ngbDropdownItem [disabled]="!isValidDateOfBirth || !activeProfile" (click)="updateProfile()">Save</button>
+                            <button ngbDropdownItem [disabled]="!isValidDateOfBirth" (click)="saveProfileAs()">Save as</button>
+                            <div class="dropdown-divider"></div>
+                            <button ngbDropdownItem (click)="loadProfile()">Load</button>
+                        </div>
+                </div>
+                <button *ngIf="activeProfile" class="btn btn-outline-dark" (click)="deleteProfile()">Delete</button>
+                
+                <br>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <app-personal-details></app-personal-details>
+                <app-benefit-scenarios></app-benefit-scenarios>
+                <app-child-benefit-periods></app-child-benefit-periods>
+                <app-disability-periods></app-disability-periods>
+            </div>
+            <div class="col-sm-6">
+                <app-earnings></app-earnings>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button (click)="generateFullReport()" class="btn btn-primary">Generate Full Report</button>
+                <br /><br />
+            </div>
+        </div>
+    </form>
 </div>

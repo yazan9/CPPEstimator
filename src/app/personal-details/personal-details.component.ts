@@ -1,41 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CalculatorService } from '../services/calculator.service';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
+import { Profile } from '../Models/Profile';
 
 @Component({
   selector: 'app-personal-details',
   templateUrl: './personal-details.component.html',
   styleUrls: ['./personal-details.component.sass']
 })
-export class PersonalDetailsComponent implements OnInit {
+export class PersonalDetailsComponent implements OnInit, OnDestroy {
   
   DateOfBirth: string;
+  Name:string;
+  profileSubscription:Subscription;
 
   constructor(private CalculatorService: CalculatorService) {
     
   }
 
   ngOnInit() {
+    this.profileSubscription = this.CalculatorService.ProfileLoaded$.subscribe((profile:Profile) => {
+      if(this.CalculatorService.isValidDateOfBirth())
+        this.DateOfBirth = moment(profile.DateOfBirth).format('YYYY-MM');
+      else{
+        this.DateOfBirth = '';
+      }
+      //if this is a new profile
+        
+      this.Name = profile.Name;
+    })
   }
   
-  onTextChange(searchValue: string): void {  
-    if(this.VerifyDateOfBirth() === true)
-    {
-      this.CalculatorService.SetDateOfBirth(moment(this.DateOfBirth).toDate());
-    }
-    else
-    {
-      this.CalculatorService.InvalidateDateOfBirth();
-    }
+  onTextChange(): void {  
+    this.CalculatorService.onTextChange(this.DateOfBirth);
   }
-  
-  VerifyDateOfBirth(): boolean
-  {
-    var regEx = /^\d{4}-\d{2}$/;
-    if(!this.DateOfBirth.match(regEx)) return false;  // Invalid format
-    var d = new Date(this.DateOfBirth);
-    var dNum = d.getTime();
-    if(!dNum && dNum !== 0) return false; // NaN value, Invalid date
-    return d.toISOString().slice(0,7) === this.DateOfBirth;
+
+  ngOnDestroy(){
+    this.profileSubscription.unsubscribe();
   }
 }

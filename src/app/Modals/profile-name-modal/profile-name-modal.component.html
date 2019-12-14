@@ -1,0 +1,16 @@
+<div class="modal-header">
+        <h4 class="modal-title" id="BenefitScenariosContentModal">Profile Name</h4>
+        <button type="button" class="close" aria-label="Close" (click)="Done()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="form-group">
+                    <label for="ProfileName">Profile name</label>
+                    <input type="text" class="form-control" id="ProfileName" name="ProfileNameText" placeholder="Profile Name" [(ngModel)] = "profileName" required>
+                  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="Done()">Save</button>
+      </div>
+    
