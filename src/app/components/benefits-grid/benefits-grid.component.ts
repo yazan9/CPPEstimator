@@ -30,7 +30,7 @@ export class BenefitsGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.Profile = JSON.parse(localStorage.getItem('Profile'));
+    this.Profile = JSON.parse(sessionStorage.getItem('Profile'));
     this.DateOfBirth = new Date(this.Profile.DateOfBirth);
     this.generateGridValues();
   }
@@ -69,7 +69,11 @@ export class BenefitsGridComponent implements OnInit {
       let simplifiedScenario: SimplifiedScenario = new SimplifiedScenario();
       simplifiedScenario.StopWork = scenario.StopWork.getFullYear().toString();
       simplifiedScenario.StartBenefits = scenario.StartBenefit.getFullYear().toString();
-      simplifiedScenario.value = simplifiedScenario.StopWork > simplifiedScenario.StartBenefits? 0: scenario.BenefitValue;
+
+      //comparison with 11 is needed to handle the edje case of stopping work in December
+      simplifiedScenario.value = scenario.StopWork.getMonth() != 11 ? 
+      (simplifiedScenario.StopWork > simplifiedScenario.StartBenefits? 0: scenario.BenefitValue)
+      : (simplifiedScenario.StopWork >= simplifiedScenario.StartBenefits? 0: scenario.BenefitValue);
 
       this.SimplifiedScenarios.push(simplifiedScenario);
     }
@@ -106,9 +110,9 @@ export class BenefitsGridComponent implements OnInit {
       {
         let scenario: BenefitScenario = new BenefitScenario();
         let stopWorkMoment = moment(this.DateOfBirth.toISOString());
-        scenario.StopWork = stopWorkMoment.add(i, 'years').toDate();
+        scenario.StopWork = stopWorkMoment.add(i*12, 'months').toDate();
         let startBenefitsMoment = moment(this.DateOfBirth).add(1, 'month');
-        scenario.StartBenefit = startBenefitsMoment.add(j, 'years').toDate();
+        scenario.StartBenefit = startBenefitsMoment.add(j*12, 'months').toDate();
         scenario.BenefitValue = 0;
         this.AllScenarios.push(scenario);
       }

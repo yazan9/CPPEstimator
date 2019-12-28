@@ -38,7 +38,6 @@ export class ProfileService {
     const httpOptions = {
       headers: this.getHeaders()
     };
-    console.log(profile);
     return this.http.put(this.ProfileUrl+'/update/'+profile.Id, profile, httpOptions)    
   }
 

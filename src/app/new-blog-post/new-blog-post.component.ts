@@ -47,7 +47,6 @@ export class NewBlogPostComponent implements OnInit {
 
   onChange(category:Category)
   {
-    console.log(category);
   }
   
   onSubmit()

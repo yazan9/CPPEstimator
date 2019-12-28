@@ -65,7 +65,6 @@ export class UserService {
     this.AdminUrl = `${this.env.backendUri}/admin`;
     this.getAllUsers().subscribe( (results) => {
       this.USERS = results;
-      console.log(this.USERS);
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
@@ -135,7 +134,6 @@ export class UserService {
     let httpOptions = {
       headers: this.getHeaders()
     };
-    console.log(httpOptions);
     this.http.delete<User>(`${this.AdminUrl}/deleteUser/${user.id}`, httpOptions).subscribe(
       () => {
         const index: number = this.USERS.indexOf(user);

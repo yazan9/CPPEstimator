@@ -12,8 +12,8 @@ import { Profile } from '../Models/Profile';
 export class PersonalDetailsComponent implements OnInit, OnDestroy {
   
   DateOfBirth: string;
-  Name:string;
   profileSubscription:Subscription;
+  Profile:Profile;
 
   constructor(private CalculatorService: CalculatorService) {
     
@@ -26,10 +26,11 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
       else{
         this.DateOfBirth = '';
       }
-      //if this is a new profile
-        
-      this.Name = profile.Name;
+      //if this is a new profile    
+      this.Profile = profile;
     })
+
+    this.Profile = this.CalculatorService.getProfile();    
   }
   
   onTextChange(): void {  

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import {MainFormServiceService} from '../main-form-service.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router, PRIMARY_OUTLET } from '@angular/router';
@@ -18,7 +18,7 @@ import { DeleteProfileComponent } from '../Modals/delete-profile/delete-profile.
   styleUrls: ['./main-form.component.sass'],
   providers: [MainFormServiceService]
 })
-export class MainFormComponent implements OnInit, OnDestroy {  
+export class MainFormComponent implements OnInit, OnDestroy, AfterViewInit {  
 
   staticAlertClosed = false;
   successMessage: string;
@@ -40,7 +40,6 @@ export class MainFormComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
-    
     setTimeout(() => this.staticAlertClosed = true, 20000);
 
     this._success.subscribe((message) => this.successMessage = message);
@@ -67,8 +66,15 @@ export class MainFormComponent implements OnInit, OnDestroy {
     })
   }
 
+  ngAfterViewInit(){
+    if(sessionStorage.getItem('Profile')){
+      let storedProfile = JSON.parse(sessionStorage.getItem('Profile'));
+      setTimeout(() => this.calculatorService.reloadProfile(storedProfile));
+    }
+  }
+
   generateFullReport():void{
-    localStorage.setItem('Profile', JSON.stringify(this.calculatorService.getProfile()));
+    sessionStorage.setItem('Profile', JSON.stringify(this.calculatorService.getProfile()));
     this.router.navigate(['/benefits_report']);  
   }
 

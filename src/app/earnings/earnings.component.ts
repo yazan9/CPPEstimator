@@ -13,7 +13,6 @@ import * as moment from 'moment';
 export class EarningsComponent implements OnInit, OnDestroy {
   
   YearOfBirth: number
-  //Earnings: Earning[];
   CurrentYear: number;
   Profile: Profile;
   IsValidDateOfBirth:boolean = false;
@@ -29,7 +28,10 @@ export class EarningsComponent implements OnInit, OnDestroy {
     private CalculatorService: CalculatorService,
     private router: Router) {
 
-    this.subscription = CalculatorService.DateOFBirth$.subscribe(
+    }
+
+  ngOnInit() {
+    this.subscription = this.CalculatorService.DateOFBirth$.subscribe(
       DOB => {
         this.YearOfBirth = DOB.getFullYear();
 
@@ -43,7 +45,7 @@ export class EarningsComponent implements OnInit, OnDestroy {
     }
     });
 
-    this.DOBValidySubscription = CalculatorService.CheckValidDateOfBirth$.subscribe(
+    this.DOBValidySubscription = this.CalculatorService.CheckValidDateOfBirth$.subscribe(
       (isValidDateOfBirth) => {
         if(!isValidDateOfBirth)
         {
@@ -57,9 +59,7 @@ export class EarningsComponent implements OnInit, OnDestroy {
     this.profileSubscription = this.CalculatorService.ProfileLoaded$.subscribe((profile)=>{
       this.reloadProfile(profile);
      })
-    }
 
-  ngOnInit() {
     this.Profile = this.CalculatorService.getProfile();    
     this.CurrentYear = new Date().getFullYear();
   }
@@ -88,7 +88,6 @@ export class EarningsComponent implements OnInit, OnDestroy {
         earning.Value = +maxEarning;
         earning.Selected = true;
         this.loadingMaxYearResponse = false;
-        console.log("Recalculating:001");
         this.CalculatorService.recalculateBenefitScenarios();
       },
         error => {
@@ -114,7 +113,6 @@ export class EarningsComponent implements OnInit, OnDestroy {
         earning.Selected = true;
       });
       this.loadingMaxAllResponse = false;
-      console.log("Recalculating:002");
       this.CalculatorService.recalculateBenefitScenarios();
     },
     error => {

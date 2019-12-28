@@ -27,8 +27,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      console.log(params.redirect);
-      console.log(params.redirect == 'reset_password');
       this.reset_password = (params.redirect == 'reset_password');
     });
   }
