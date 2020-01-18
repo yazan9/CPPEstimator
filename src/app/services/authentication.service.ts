@@ -80,7 +80,7 @@ export class AuthenticationService {
 
   public isAdmin():boolean {
     const user = this.getUserDetails();
-    if (user) {
+    if (user && this.isLoggedIn()) {
       return user.isAdmin
     } 
     else {

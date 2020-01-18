@@ -1,21 +1,28 @@
-  <div class="modal-header">
-    <h4 class="modal-title" id="BenefitScenariosContentModal">Add New Scenario</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <div class="form-group">
+<div class="modal-header">
+  <h4 class="modal-title" id="BenefitScenariosContentModal">Add New Scenario</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
         <label for="StopWorkInput">Stop Work</label>
-        <input type="text" [(ngModel)] = "NewScenario.StopWork" pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="StopWorkInput" id="StopWorkInput" aria-describedby="StopWorkInputHelp" placeholder="YYYY-MM">
+        <!-- <input type="text" [(ngModel)] = "NewScenario.StopWork" pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="StopWorkInput" id="StopWorkInput" aria-describedby="StopWorkInputHelp" placeholder="YYYY-MM"> -->
+        <month-date-picker (dateSelected)="onStopWorkSelected($event)">
+        </month-date-picker>
       </div>
-      <div class="form-group">
+
+    
+
+    <div class="form-group">
         <label for="StartBenefitInput">Start Benefit</label>
-        <input type="text" [(ngModel)] = "NewScenario.StartBenefit" pattern="[A-Za-z]{3}" class="form-control" name="StartBenefitInput" id="StartBenefitInput" placeholder="YYYY-MM">
+        <!-- <input type="text" [(ngModel)] = "NewScenario.StartBenefit" pattern="[A-Za-z]{3}" class="form-control" name="StartBenefitInput" id="StartBenefitInput" placeholder="YYYY-MM"> -->
+        <month-date-picker [label]="'Start Benefit'"
+        (dateSelected)="onStartBenefitSelected($event)"></month-date-picker>
       </div>
-          </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="Save()">Add</button>
-  </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button [disabled]="!NewScenario.StartBenefit || !NewScenario.StopWork" type="button" class="btn btn-outline-dark" (click)="Save()">Add</button>
+</div>

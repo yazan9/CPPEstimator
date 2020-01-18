@@ -1,0 +1,25 @@
+<!-- <div class="form-group row"> -->
+  <!-- <label for="{{label}}-input" class="col-sm-3 col-form-label">{{label}}</label> -->
+  <!-- <div class="col-sm-9"> -->
+  <input (click)="showPicker = !showPicker" type="text" class="form-control" aria-label="Text input with dropdown button" 
+  [(ngModel)]="formattedDate" placeholder="(YYYY-MM)" 
+  autocomplete="off" readonly style="background-color: white;">
+  <!-- </div> -->
+  <div class="date-picker-container" *ngIf="showPicker">
+    <table style="width:100%;text-align:center">
+      <tr>
+        <td><a [routerLink]="" (click)="changeYear(-10)"><<</a></td>
+        <td><a [routerLink]="" (click)="changeYear(-1)"><</a></td>
+        <td><span>{{selectedYear}}</span></td>
+        <td><a [routerLink]="" (click)="changeYear(1)">></a></td>
+        <td><a [routerLink]="" (click)="changeYear(10)">>></a></td>
+      </tr>
+    </table>
+
+    <ng-container *ngFor="let month of months; let i = index">
+    <div class="month-block" (click)="selectMonth(i);">
+    <a [routerLink]="">{{month}}</a>
+    </div>
+  </ng-container>
+  </div>
+<!-- </div> -->

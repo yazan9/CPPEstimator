@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
+  back: any;
 
   constructor(private auth: AuthenticationService, private router: Router, private route: ActivatedRoute) {
     if(this.auth.isLoggedIn() === true){
@@ -28,6 +29,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.reset_password = (params.redirect == 'reset_password');
+    });
+
+    this.route.queryParams.subscribe(p => {
+      if(p.back){
+        this.back = p.back;
+      }
     });
   }
 
@@ -43,8 +50,14 @@ export class LoginComponent implements OnInit {
     //if all is well, call the service function
     this.loadingResponse = true;
     this.auth.login(this.credentials).subscribe(() => {
-      this.router.navigateByUrl("/");
       this.loadingResponse = false;
+      if(this.back)
+        this.router.navigateByUrl(this.back.toString());
+      else
+        this.router.navigateByUrl("/");
+
+      return;
+      
     }, (err) => {
       this.errorMessage = "Login Failed";
       this.loadingResponse = false;

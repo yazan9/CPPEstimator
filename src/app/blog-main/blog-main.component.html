@@ -16,7 +16,7 @@
         </div>
       </div>
 
-<div class="margin-top-1">
+<div class="margin-top-1" *ngIf="auth.isAdmin()">
   <a class="btn btn-outline-danger" routerLink="/new_post">+ Create a new resource</a>
   <a class="btn btn-outline-primary margin-left-1" routerLink="/categories">Manage Categories</a>
 </div>

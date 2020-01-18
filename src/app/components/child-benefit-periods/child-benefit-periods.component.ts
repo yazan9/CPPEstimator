@@ -91,6 +91,7 @@ export class ChildBenefitPeriodsComponent implements OnInit {
     //Birth Date
     this.NewChild.BirthDate = new Date(this.NewChild.BirthDate);
     this.NewChild.BirthDate.setMinutes(this.NewChild.BirthDate.getMinutes() + offset);
+    console.log(this.NewChild.BirthDate);
 
     //StartBenefits Date
     this.NewChild.StartBenefit = new Date(this.NewChild.BirthDate);
@@ -123,10 +124,10 @@ export class ChildBenefitPeriodsComponent implements OnInit {
   }
 
   showStartBenefit(DOB:Date):string{
-    return moment(DOB).format('YYYY-MM');
+    return moment(DOB).add(1, 'months').format('YYYY-MM');
   }
 
   showEndBenefit(DOB:Date):string{
-    return moment(DOB).add(83,'months').format('YYYY-MM');
+    return moment(DOB).add(84,'months').format('YYYY-MM');
   }
 }

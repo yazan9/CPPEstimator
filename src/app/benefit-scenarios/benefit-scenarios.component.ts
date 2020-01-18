@@ -93,6 +93,7 @@ export class BenefitScenariosComponent implements OnInit {
       this.NewScenario = this.Profile.Scenarios.pop();
       this.NewScenario.BenefitValue = calculatedBenefits.pop();
       this.benefitScenarios.push(this.NewScenario);
+      this.Profile.Scenarios.push(this.NewScenario);
       this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
     },
     error => {

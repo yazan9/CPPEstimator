@@ -5,6 +5,7 @@ import { Month } from '../Models/Months';
 import { BlogService } from '../services/blog.service';
 import { BlogHelper } from '../Helpers/BlogHelper';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-blog-main',
@@ -22,7 +23,8 @@ export class BlogMainComponent implements OnInit {
   
   constructor(
     private blogService: BlogService, 
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public auth: AuthenticationService
     ) { }
 
   ngOnInit() {

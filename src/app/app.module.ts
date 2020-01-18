@@ -42,6 +42,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { ProfileNameModalComponent } from './Modals/profile-name-modal/profile-name-modal.component';
 import { LoadProfileModalComponent } from './Modals/load-profile-modal/load-profile-modal.component';
 import { DeleteProfileComponent } from './Modals/delete-profile/delete-profile.component';
+import { MonthDatePickerComponent } from './month-date-picker/month-date-picker.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { DeleteProfileComponent } from './Modals/delete-profile/delete-profile.c
     ResetPasswordComponent,
     ProfileNameModalComponent,
     LoadProfileModalComponent,
-    DeleteProfileComponent
+    DeleteProfileComponent,
+    MonthDatePickerComponent
   ],
   imports: [
     BrowserModule,

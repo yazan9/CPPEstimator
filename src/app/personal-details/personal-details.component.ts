@@ -26,6 +26,7 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
       else{
         this.DateOfBirth = '';
       }
+
       //if this is a new profile    
       this.Profile = profile;
     })
@@ -33,11 +34,16 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
     this.Profile = this.CalculatorService.getProfile();    
   }
   
-  onTextChange(): void {  
-    this.CalculatorService.onTextChange(this.DateOfBirth);
-  }
+  // onTextChange(): void {  
+  //   this.CalculatorService.onTextChange(this.DateOfBirth);
+  // }
 
   ngOnDestroy(){
     this.profileSubscription.unsubscribe();
+  }
+
+  onDateSelected(val){
+    this.CalculatorService.onTextChange(val);
+    moment(val).format('YYYY-MM');
   }
 }

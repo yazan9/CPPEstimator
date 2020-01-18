@@ -32,7 +32,7 @@
                     <td bgcolor="#ffe5e5">{{GroupedScenario[0].StopWork}}</td>
                     <td bgcolor="#ffe5e5"> {{i + 55}}</td>
                     <ng-container *ngFor="let scenario of GroupedScenario">
-                    <td bgcolor="#e6fff7" *ngIf="scenario.value != 0">{{scenario.value.toFixed(2)}}</td>
+                    <td bgcolor="#e6fff7" *ngIf="scenario.value != 0">{{scenario.value | number: '1.2-2'}}</td>
                     <td *ngIf="scenario.value === 0">-</td>
                   </ng-container>
                 </tr>

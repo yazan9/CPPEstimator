@@ -14,8 +14,10 @@
   <div class="form-group row">
     <label for="InputBirth" class="col-sm-3 col-form-label">Date of Birth</label>
     <div class="col-sm-9">
-      <input type="text" name="DOB" [(ngModel)]="DateOfBirth" class="form-control" id="InputBirth" placeholder="(YYYY-MM)" (input)="onTextChange()" #DOB="ngModel">
+      <!-- <input type="text" name="DOB" [(ngModel)]="DateOfBirth" class="form-control" id="InputBirth" placeholder="(YYYY-MM)" (input)="onTextChange()" #DOB="ngModel"> -->
+      <month-date-picker [formattedDate]="DateOfBirth" (dateSelected)="onDateSelected($event)"></month-date-picker>
     </div>
   </div>
+
   </form>
  </fieldset>
