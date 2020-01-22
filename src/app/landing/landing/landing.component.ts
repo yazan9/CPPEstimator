@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class LandingComponent implements OnInit {
   isAdmin: boolean;
   username: string;
+  collapsed: boolean;
 
   constructor(public auth: AuthenticationService) { }
 
