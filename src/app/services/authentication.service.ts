@@ -112,6 +112,19 @@ export class AuthenticationService {
   public setNewPassword(hash:string, password:string):Observable<any> {
     return this.http.post(this.AuthenticationURL+'/set_password/'+hash, password);
   }
+
+  public updateProfileInfo(user: TokenPayload){
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+    return this.http.put(this.AuthenticationURL+'/update_profile/', user, httpOptions).toPromise().then((resp:TokenResponse)=>{
+      if(resp.token)
+      this.saveToken(resp.token)
+    }, 
+    err=>{
+      
+    });
+  }
   
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -119,4 +132,12 @@ export class AuthenticationService {
     `${error.error.message}`);
     };
   }
+
+  private getHeaders()
+   {
+     return new HttpHeaders({
+       'Content-Type':  'application/json',
+       'Authorization': `Bearer ${this.getToken()}`
+     })
+   }
 }

@@ -8,11 +8,13 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class LandingComponent implements OnInit {
   isAdmin: boolean;
+  username: string;
 
   constructor(public auth: AuthenticationService) { }
 
   ngOnInit() {
     this.isAdmin = this.auth.isAdmin();
+    this.username = this.auth.getUserDetails().username;
   }
 
 }

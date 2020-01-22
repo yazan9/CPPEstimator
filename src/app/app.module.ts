@@ -43,6 +43,9 @@ import { ProfileNameModalComponent } from './Modals/profile-name-modal/profile-n
 import { LoadProfileModalComponent } from './Modals/load-profile-modal/load-profile-modal.component';
 import { DeleteProfileComponent } from './Modals/delete-profile/delete-profile.component';
 import { MonthDatePickerComponent } from './month-date-picker/month-date-picker.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ChangePasswordModalComponent } from './Modals/change-password-modal/change-password-modal.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +84,10 @@ import { MonthDatePickerComponent } from './month-date-picker/month-date-picker.
     ProfileNameModalComponent,
     LoadProfileModalComponent,
     DeleteProfileComponent,
-    MonthDatePickerComponent
+    MonthDatePickerComponent,
+    EditProfileComponent,
+    ChangePasswordModalComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +114,8 @@ import { MonthDatePickerComponent } from './month-date-picker/month-date-picker.
     UserDemoteComponent,
     ProfileNameModalComponent,
     LoadProfileModalComponent,
-    DeleteProfileComponent
+    DeleteProfileComponent,
+    ChangePasswordModalComponent
   ]
 })
 export class AppModule { }

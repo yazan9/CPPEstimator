@@ -1,5 +1,5 @@
-<div class="container-fluid full-height bg-black text-white ">
-    <div class="row d-flex bg-white">
+<div class="container-fluid full-height text-white ">
+    <!-- <div class="row d-flex bg-white">
         <div class="col-6">
         <img src="assets/img/Logo3.jpg" style="max-width:50%"/>
         </div>
@@ -27,13 +27,100 @@
                                                 <li *ngIf="auth.isLoggedIn()" class="nav-item">
                                                     <a class="nav-link text-black" (click)="auth.logout()" style="cursor: pointer">Logout</a>
                                                 </li>
+                                                <li class="nav-item" ngbDropdown>
+                                                  <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown1" role="button">
+                                                    Static
+                                                  </a>
+                                                  <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
+                                                    <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Action</a>
+                                                    <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Another action</a>
+                                                    <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Something else here</a>
+                                                  </div>
+                                                </li>
                                               </ul>
                                 </td>
                           </tr>
                         </tbody>
                       </table>
         </div>
-    </div>
+    </div> -->
+
+    <nav class="navbar navbar-expand-md navbar-light bg-white">
+      <img src="assets/img/Logo3.jpg" style="max-width:25%"/>
+      <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+        <ul class="navbar-nav ml-auto">
+
+          <li *ngIf="auth.isAdmin()" class="nav-item">
+            <a class="nav-link text-black" routerLink="/admin">Admin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-black" routerLink="/blog">Blog</a>
+          </li>
+            <li class="nav-item">
+              <a class="nav-link text-black" routerLink="/main">Calculator</a>
+            </li>
+            <li *ngIf="!auth.isLoggedIn()" class="nav-item">
+              <a class="nav-link text-black" routerLink="/register">Sign Up</a>
+            </li>
+            <li *ngIf="!auth.isLoggedIn()" class="nav-item">
+              <a class="nav-link text-black" routerLink="/login">Login</a>
+            </li>
+            <!-- <li *ngIf="auth.isLoggedIn()" class="nav-item">
+                <a class="nav-link text-black" (click)="auth.logout()" style="cursor: pointer">Logout</a>
+            </li> -->
+
+            <li *ngIf="auth.isLoggedIn()" class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+              <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown3" role="button">
+                {{username}}
+              </a>
+              <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                <a ngbDropdownItem [routerLink]="['/edit-profile']" style="cursor: pointer">Profile</a>
+                <a ngbDropdownItem (click)="auth.logout()" style="cursor: pointer">Logout</a>
+              </div>
+            </li>
+
+
+
+          <!-- <li class="nav-item" ngbDropdown>
+            <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown1" role="button">
+              Static
+            </a>
+            <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Action</a>
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Another action</a>
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Something else here</a>
+            </div>
+          </li> -->
+    
+          <!-- <li class="nav-item" ngbDropdown>
+            <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
+              Static right
+            </a>
+            <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Action</a>
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Another action</a>
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Something else here</a>
+            </div>
+          </li> -->
+    
+          <!-- <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+            <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown3" role="button">
+              Dynamic
+            </a>
+            <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Action</a>
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Another action</a>
+              <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Something else here</a>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+
     <div class="row">
       <div class="col-12 justify-content-center align-items-center no-padding">
           <img src="assets/img/coins.jpg" class="img-fluid" alt="Responsive image">

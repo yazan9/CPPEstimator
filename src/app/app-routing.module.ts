@@ -13,6 +13,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { BenefitsGridComponent } from './components/benefits-grid/benefits-grid.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {path: 'main', component: MainFormComponent, canActivate: [AuthGuard]},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
   {path: 'benefits_report', component: BenefitsGridComponent, canActivate: [AuthGuard]},
   {path: 'forgot_password', component: ForgotPasswordComponent},
-  {path: 'reset_password/:hash', component: ResetPasswordComponent}
+  {path: 'reset_password/:hash', component: ResetPasswordComponent},
+  {path: 'edit-profile', component: EditProfileComponent}
   ];
 
 @NgModule({
