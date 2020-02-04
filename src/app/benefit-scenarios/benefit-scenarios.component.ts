@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class BenefitScenariosComponent implements OnInit {
   
-  benefitScenarios: BenefitScenario[];
+  //benefitScenarios: BenefitScenario[];
   selectedScenario: BenefitScenario;
   NewScenario: BenefitScenario;
   Profile: Profile;
@@ -35,7 +35,7 @@ export class BenefitScenariosComponent implements OnInit {
           if(!isValidDateOfBirth)
           {
           this.Profile.Scenarios = [];
-          this.benefitScenarios = this.Profile.Scenarios;
+          //this.benefitScenarios = this.Profile.Scenarios;
           }
           this.IsValidDateOfBirth = isValidDateOfBirth;
         }
@@ -57,7 +57,7 @@ export class BenefitScenariosComponent implements OnInit {
   ngOnInit() {
     this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
     this.Profile = this.CalculatorService.getProfile();
-    this.benefitScenarios = this.Profile.Scenarios;
+    //this.benefitScenarios = this.Profile.Scenarios;
   }
   
   onSelect(scenario: BenefitScenario): void {
@@ -65,9 +65,9 @@ export class BenefitScenariosComponent implements OnInit {
   }
   
   onDelete(scenario: BenefitScenario): void {
-    const index: number = this.benefitScenarios.indexOf(scenario);
+    const index: number = this.Profile.Scenarios.indexOf(scenario);
     if (index !== -1) {
-        this.benefitScenarios.splice(index, 1);
+        this.Profile.Scenarios.splice(index, 1);
     }      
   }
   
@@ -88,11 +88,12 @@ export class BenefitScenariosComponent implements OnInit {
     this.NewScenario.StartBenefit = new Date (this.NewScenario.StartBenefit);
     this.NewScenario.StopWork = new Date(this.NewScenario.StopWork);
     this.Profile.Scenarios.push(this.NewScenario);
-
     this.CalculatorService.getBenefitsForScenario().subscribe((calculatedBenefits) => {
+      
+      //this.Profile.Scenarios.push(this.NewScenario);
       this.NewScenario = this.Profile.Scenarios.pop();
       this.NewScenario.BenefitValue = calculatedBenefits.pop();
-      this.benefitScenarios.push(this.NewScenario);
+      //this.benefitScenarios.push(this.NewScenario);
       this.Profile.Scenarios.push(this.NewScenario);
       this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
     },
@@ -113,6 +114,6 @@ export class BenefitScenariosComponent implements OnInit {
   Clear()
   {
     this.Profile.Scenarios = [];
-    this.benefitScenarios = this.Profile.Scenarios;
+    //this.benefitScenarios = this.Profile.Scenarios;
   }
 }

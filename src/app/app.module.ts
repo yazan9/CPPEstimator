@@ -46,6 +46,7 @@ import { MonthDatePickerComponent } from './month-date-picker/month-date-picker.
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ChangePasswordModalComponent } from './Modals/change-password-modal/change-password-modal.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { ToastComponent } from './components/toast/toast.component';
     MonthDatePickerComponent,
     EditProfileComponent,
     ChangePasswordModalComponent,
-    ToastComponent
+    ToastComponent,
+    DateFormatPipe
   ],
   imports: [
     BrowserModule,

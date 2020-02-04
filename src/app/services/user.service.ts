@@ -123,10 +123,7 @@ export class UserService {
 
   private getHeaders()
   {
-    return new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': `Bearer ${this.authService.getToken()}`
-    })
+    return this.authService.getHeaders();
   }
 
   deleteUser(user:User): void

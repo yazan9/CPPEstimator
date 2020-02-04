@@ -97,6 +97,10 @@ export class CalculatorService {
     else
       //this.SetDateOfBirth(moment(profile.DateOfBirth).toDate());
       this.IsValidDateOfBirth = true;
+    
+      if(this.Profile.Scenarios === null){
+        this.Profile.Scenarios = [];
+      }
 
     this.ProfileSource.next(profile);
   }
@@ -178,10 +182,7 @@ export class CalculatorService {
   
   private getHeaders()
   {
-    return new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': `Bearer ${this.authService.getToken()}`
-    })
+    return this.authService.getHeaders();
   }
 
 }

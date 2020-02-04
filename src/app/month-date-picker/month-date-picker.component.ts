@@ -12,8 +12,15 @@ import { Profile } from '../Models/Profile';
 export class MonthDatePickerComponent implements OnInit {
 
   showPicker:boolean = false;
+
   months: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  years: string[] = [];
+
   selectedYear:string;
+  selectedStringMonth:string;
+  selectedNumericalMonth:number;
+  selectedMonth:string;
+
   @Output() dateSelected = new EventEmitter();
   @Input() label:string;
   @Input() disabled:boolean;
@@ -23,7 +30,6 @@ export class MonthDatePickerComponent implements OnInit {
   constructor(private CalculatorService: CalculatorService){}
 
   ngOnInit(){
-    this.selectedYear = this.formattedDate === '' ? moment().year().toString() : moment(this.formattedDate).year().toString();
     this.profileSubscription = this.CalculatorService.ProfileLoaded$.subscribe((profile:Profile) => {
       if(this.CalculatorService.isValidDateOfBirth())
         this.formattedDate = moment(profile.DateOfBirth).format('YYYY-MM');
@@ -31,18 +37,25 @@ export class MonthDatePickerComponent implements OnInit {
         this.formattedDate = '';
       }
     })
+
+    for(let i = 1900 ; i <= 2100 ; i++){
+      this.years.push(i.toString());
+    }
+    this.selectedYear = this.formattedDate === '' ? moment().year().toString() : moment(this.formattedDate).year().toString();
+    this.selectedStringMonth = this.formattedDate === '' ? this.months[moment().month()] : this.months[moment(this.formattedDate).month()];
+    this.selectedNumericalMonth = this.formattedDate === '' ? moment().month() : moment(this.formattedDate).month();
   }
 
-  changeYear(offset: number){
-    this.selectedYear = (parseInt(this.selectedYear) + offset).toString();
-  }
-
-  selectMonth(index: number){
-    let month = (index + 1).toString();
-    month = month.length == 1? '0'+month : month;
-    let formattedDate = this.selectedYear.toString() + '-' + month;
+  changeYear(val : string){
+    this.selectedYear = val;
+    let formattedDate = this.selectedYear + '-' + this.selectedMonth;
     this.dateSelected.emit(formattedDate);
     this.showPicker = false;
     this.formattedDate = formattedDate;
+  }
+
+  changeMonth(val: string){
+    let monthIndex = this.months.findIndex((m)=> m === val) + 1;
+    this.selectedMonth = monthIndex.toString().length == 1? '0'+ monthIndex.toString() : monthIndex.toString();
   }
 }

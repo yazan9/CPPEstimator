@@ -11,9 +11,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let scenario of benefitScenarios" (click)="onSelect(scenario)" [class.table-primary]="scenario === selectedScenario">
-      <td>{{scenario.StopWork.toISOString().substring(0,7)}}</td>
-      <td>{{scenario.StartBenefit.toISOString().substring(0,7)}}</td>
+    <tr *ngFor="let scenario of Profile.Scenarios" (click)="onSelect(scenario)" [class.table-primary]="scenario === selectedScenario">
+      <!-- <td>{{scenario.StopWork.toISOString().substring(0,7)}}</td>
+      <td>{{scenario.StartBenefit.toISOString().substring(0,7)}}</td> -->
+      <td>{{scenario.StopWork | dateFormat}}</td>
+      <td>{{scenario.StartBenefit | dateFormat}}</td>
       <td>{{scenario.BenefitValue.toFixed(2)}}</td>
       <td>
         <button type="button" class="close" aria-label="Close" (click)="onDelete(scenario)">

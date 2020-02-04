@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RouterModule, Routes, Router } from '@angular/router';
+import { RouterModule, Routes, Router, ActivatedRoute } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -37,7 +37,7 @@ export class AuthenticationService {
   };
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private route:ActivatedRoute) {
     this.AuthenticationURL = `${this.env.backendUri}`;
    }
   
@@ -71,11 +71,15 @@ export class AuthenticationService {
   public isLoggedIn(): boolean {
     const user = this.getUserDetails();
     if (user) {
-      return user.exp > Date.now() / 1000;
+      return this.isTokenValid(user);
     } 
     else {
       return false;
     }
+  }
+
+  private isTokenValid(user):boolean{
+    return user.exp > Date.now() / 1000;
   }
 
   public isAdmin():boolean {
@@ -133,8 +137,10 @@ export class AuthenticationService {
     };
   }
 
-  private getHeaders()
+  public getHeaders()
    {
+     if(!this.isTokenValid(this.getUserDetails()))
+      this.router.navigate(['/login'], {queryParams:{back:this.router.url}});
      return new HttpHeaders({
        'Content-Type':  'application/json',
        'Authorization': `Bearer ${this.getToken()}`
