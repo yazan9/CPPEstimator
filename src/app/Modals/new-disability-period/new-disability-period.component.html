@@ -7,23 +7,28 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="StartDisabilityPeriod">Disability Start (YYYY-MM):</label>
+        <label for="StartDisabilityPeriod">Disability Start</label>
         <!-- <input type="text" [(ngModel)] = "NewDisabilityPeriod.StartDisability" 
         pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="StartDisabilityInput" 
         id="StartDisabilityInput" aria-describedby="StartDisabilityInputHelp" placeholder="YYYY-MM"> -->
-        <month-date-picker 
-              (dateSelected)="onDisabilityStartSelected($event)"></month-date-picker>
+        <!-- <month-date-picker 
+              (dateSelected)="onDisabilityStartSelected($event)"></month-date-picker> -->
+              <month-date-picker-inline
+        (dateSelected)="onDisabilityStartSelected($event)" [futureYearsOnly]="false"></month-date-picker-inline>
       </div>
       <div class="form-group">
-        <label for="EndDisabilityPeriod">Disability End (YYYY-MM):</label>
+        <label for="EndDisabilityPeriod">Disability End</label>
         <!-- <input type="text" [(ngModel)] = "NewDisabilityPeriod.EndDisability" 
         pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="EndDisabilityInput" 
         id="EndDisabilityInput" aria-describedby="EndDisabilityInputHelp" placeholder="YYYY-MM"> -->
-        <month-date-picker 
-              (dateSelected)="onDisabilityEndSelected($event)"></month-date-picker>
+        <!-- <month-date-picker 
+              (dateSelected)="onDisabilityEndSelected($event)"></month-date-picker> -->
+              <month-date-picker-inline
+              (dateSelected)="onDisabilityEndSelected($event)" [futureYearsOnly]="false"></month-date-picker-inline>
       </div>
           </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="Save()">Add</button>
+    <button type="button" class="btn btn-outline-dark" (click)="Save()" 
+    [disabled]="!NewDisabilityPeriod.StartDisability || !NewDisabilityPeriod.EndDisability">Add</button>
   </div>

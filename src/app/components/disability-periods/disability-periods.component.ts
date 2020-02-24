@@ -68,7 +68,7 @@ export class DisabilityPeriodsComponent implements OnInit {
 
   openModal()
   {
-    const modalRef = this.modalService.open(NewDisabilityPeriodComponent);
+    const modalRef = this.modalService.open(NewDisabilityPeriodComponent, {size:'sm'});
     modalRef.componentInstance.NewDisabilityPeriod = this.NewDisabilityPeriod;
     
     modalRef.result.then((result) => {

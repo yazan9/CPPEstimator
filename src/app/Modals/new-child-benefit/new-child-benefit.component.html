@@ -30,15 +30,17 @@
 
        <div class="form-group row">
           <div class="col-sm-1"></div>
-           <label for="ChildBirthDate" class="col-sm-5 col-form-label">Birthday (YYYY-MM):</label>
+           <label for="ChildBirthDate" class="col-sm-5 col-form-label">Birthday</label>
           <div class="col-sm-6">
               <!-- <input type="text" [(ngModel)] = "NewChild.BirthDate" 
               pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="BirthDateInput" 
               id="BirthDateInput" aria-describedby="BirthDateInputHelp" placeholder="YYYY-MM"
               [disabled] = "ChildInputType === 'PartialMode'"> -->
-              <month-date-picker 
+              <!-- <month-date-picker 
               [disabled]="ChildInputType === 'PartialMode'"
-              (dateSelected)="onBirthDateSelected($event)"></month-date-picker>
+              (dateSelected)="onBirthDateSelected($event)"></month-date-picker> -->
+              <month-date-picker-inline
+        (dateSelected)="onBirthDateSelected($event)" [futureYearsOnly]="false"></month-date-picker-inline>
           </div>
         </div>
 
@@ -46,15 +48,17 @@
 
         <div class="form-group row">
             <div class="col-sm-1"></div>
-             <label for="ChildAdoptionDate" class="col-sm-5 col-form-label">Adoption (YYYY-MM):</label>
+             <label for="ChildAdoptionDate" class="col-sm-5 col-form-label">Adoption</label>
             <div class="col-sm-6">
                 <!-- <input type="text" [(ngModel)] = "NewChild.AdoptionDate" 
         pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="AdotpionDateInput" 
         id="AdotpionDateInput" aria-describedby="AdotpionDateInputHelp" placeholder="YYYY-MM (Optional)"
         [disabled] = "ChildInputType === 'PartialMode'"> -->
-        <month-date-picker 
+        <!-- <month-date-picker 
               [disabled]="ChildInputType === 'PartialMode'"
-              (dateSelected)="onAdoptionDateSelected($event)"></month-date-picker>
+              (dateSelected)="onAdoptionDateSelected($event)"></month-date-picker> -->
+              <month-date-picker-inline
+        (dateSelected)="onAdoptionDateSelected($event)" [futureYearsOnly]="false"></month-date-picker-inline>
             </div>
           </div>
 
@@ -107,5 +111,6 @@
           </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="Save()">Add</button>
+    <button type="button" class="btn btn-outline-dark" (click)="Save()"
+    [disabled]="!NewChild.BirthDate && !NewChild.AdoptionDate">Add</button>
   </div>

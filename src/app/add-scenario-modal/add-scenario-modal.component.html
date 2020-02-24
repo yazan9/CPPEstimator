@@ -9,8 +9,8 @@
     <div class="form-group">
         <label for="StopWorkInput">Stop Work</label>
         <!-- <input type="text" [(ngModel)] = "NewScenario.StopWork" pattern="[0-9]{4}-([0][0-9]|[1][0-2])" class="form-control" name="StopWorkInput" id="StopWorkInput" aria-describedby="StopWorkInputHelp" placeholder="YYYY-MM"> -->
-        <month-date-picker (dateSelected)="onStopWorkSelected($event)">
-        </month-date-picker>
+        <month-date-picker-inline (dateSelected)="onStopWorkSelected($event)" [futureYearsOnly]="true">
+        </month-date-picker-inline>
       </div>
 
     
@@ -18,8 +18,8 @@
     <div class="form-group">
         <label for="StartBenefitInput">Start Benefit</label>
         <!-- <input type="text" [(ngModel)] = "NewScenario.StartBenefit" pattern="[A-Za-z]{3}" class="form-control" name="StartBenefitInput" id="StartBenefitInput" placeholder="YYYY-MM"> -->
-        <month-date-picker [label]="'Start Benefit'"
-        (dateSelected)="onStartBenefitSelected($event)"></month-date-picker>
+        <month-date-picker-inline [label]="'Start Benefit'"
+        (dateSelected)="onStartBenefitSelected($event)" [futureYearsOnly]="true"></month-date-picker-inline>
       </div>
   </form>
 </div>

@@ -1,0 +1,15 @@
+  <div>
+  <div ngbDropdown class="d-inline-block btn-margin-1">
+    <select (ngModelChange)="changeMonth($event)" [(ngModel)]="selectedStringMonth" class="form-control btn btn-outline-primary" name="monthSelect">
+        <option hidden [ngValue]="null" class="btn btn-light disabled-white">Month</option>
+        <option class="btn btn-light" *ngFor="let month of months">{{month}}</option>
+    </select>
+  </div>
+
+  <div ngbDropdown class="d-inline-block btn-margin-1">
+    <select (ngModelChange)="changeYear($event)" [(ngModel)]="selectedYear" class="form-control btn btn-outline-primary" name="yearSelect">
+      <option hidden [ngValue]="null" class="btn btn-light">Year</option>
+      <option class="btn btn-light" *ngFor="let year of years">{{year}}</option>
+    </select>
+  </div>
+  </div>

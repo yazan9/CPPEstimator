@@ -73,7 +73,8 @@ export class BenefitScenariosComponent implements OnInit {
   
   openModal()
   {
-    const modalRef = this.modalService.open(AddScenarioModalComponent);
+    this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
+    const modalRef = this.modalService.open(AddScenarioModalComponent, {size:'sm'});
     modalRef.componentInstance.NewScenario = this.NewScenario;
     
     modalRef.result.then((result) => {
@@ -93,6 +94,8 @@ export class BenefitScenariosComponent implements OnInit {
       //this.Profile.Scenarios.push(this.NewScenario);
       this.NewScenario = this.Profile.Scenarios.pop();
       this.NewScenario.BenefitValue = calculatedBenefits.pop();
+      if(!this.NewScenario.BenefitValue)
+        this.NewScenario.BenefitValue = 0;
       //this.benefitScenarios.push(this.NewScenario);
       this.Profile.Scenarios.push(this.NewScenario);
       this.NewScenario = {StopWork: null, StartBenefit: null, BenefitValue: 0};
