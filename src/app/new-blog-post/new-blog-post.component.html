@@ -15,7 +15,8 @@
 
   <div class="form-group">
     <label for="InputBody">Content</label>
-    <ckeditor name="NewBody" [editor]="Editor" [(ngModel)]="newBlogPost.body" data={{newBlogPost.body}}></ckeditor>
+    <ckeditor name="NewBody" [editor]="Editor" [(ngModel)]="newBlogPost.body" 
+    [config]="editorConfig" data={{newBlogPost.body}}></ckeditor>
   </div>
 
   <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>

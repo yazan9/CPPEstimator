@@ -5,6 +5,7 @@ import {BlogPost} from '../Models/BlogPost';
 import { Location } from '@angular/common';
 import { Category } from '../Models/Category';
 import { CRUDOperations } from '../Models/CRUDOperations';
+import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
 
 @Component({
   selector: 'app-new-blog-post',
@@ -13,7 +14,10 @@ import { CRUDOperations } from '../Models/CRUDOperations';
 })
 export class NewBlogPostComponent implements OnInit {
   
-  public Editor = ClassicEditor
+  public Editor = ClassicEditor;
+  editorConfig = {
+    extraPlugins: [ this.imagePluginFactory ]
+  };
   public AllCategories: Category[];
   public newBlogPost: BlogPost;
   SelectedCategory: Category
@@ -70,6 +74,17 @@ export class NewBlogPostComponent implements OnInit {
     }
     else
       this.blogService.updateBlogPost(this.newBlogPost).subscribe(()=>this.location.back());
+  }
+
+  imagePluginFactory(editor) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+      return new CloudinaryImageUploadAdapter( 
+        loader,
+        'dwarqqrii',
+        'bslftksl',
+        [ 160, 500, 1000, 1052 ]
+      );
+    };
   }
 
 }
