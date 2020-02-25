@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { CalculatorService } from '../services/calculator.service';
@@ -9,7 +9,7 @@ import { Profile } from '../Models/Profile';
   templateUrl: './month-date-picker-inline.component.html',
   styleUrls: ['./month-date-picker-inline.component.sass']
 })
-export class MonthDatePickerInlineComponent implements OnInit {
+export class MonthDatePickerInlineComponent implements OnInit, OnChanges {
 
   showPicker:boolean = false;
 
@@ -31,21 +31,42 @@ export class MonthDatePickerInlineComponent implements OnInit {
   constructor(private CalculatorService: CalculatorService){}
 
   ngOnInit(){
-    this.profileSubscription = this.CalculatorService.ProfileLoaded$.subscribe((profile:Profile) => {
-      if(this.CalculatorService.isValidDateOfBirth())
-        this.formattedDate = moment(profile.DateOfBirth).format('YYYY-MM');
-      else{
-        this.formattedDate = '';
-      }
-    })
+    // this.profileSubscription = this.CalculatorService.ProfileLoaded$.subscribe((profile:Profile) => {
+    //   if(this.CalculatorService.isValidDateOfBirth()){
+    //     this.formattedDate = moment(profile.DateOfBirth).format('YYYY-MM');
+    //   }
+    //   else{
+    //     this.formattedDate = '';
+    //   }
+    // })
+
+    //this.initIncomingDate(this.formattedDate);
 
     let initialYear:number = this.futureYearsOnly ? moment().year() : 1900;
     for(let i = initialYear ; i <= 2100 ; i++){
       this.years.push(i.toString());
     }
-    this.selectedYear = this.formattedDate === '' ? null : moment(this.formattedDate).year().toString();
-    this.selectedStringMonth = this.formattedDate === '' ? null : this.months[moment(this.formattedDate).month()];
-    this.selectedNumericalMonth = this.formattedDate === '' ? moment().month() : moment(this.formattedDate).month();
+    // this.selectedYear = this.formattedDate === '' ? null : moment(this.formattedDate).year().toString();
+    // this.selectedStringMonth = this.formattedDate === '' ? null : this.months[moment(this.formattedDate).month()];
+    // this.selectedNumericalMonth = this.formattedDate === '' ? moment().month() : moment(this.formattedDate).month();
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.formattedDate)
+      this.initIncomingDate(changes.formattedDate);
+  }
+
+  initIncomingDate(incomingDate){
+    if(incomingDate.currentValue){
+      this.formattedDate = moment(incomingDate.currentValue).format('YYYY-MM');
+      this.selectedYear = this.formattedDate === '' ? null : moment(this.formattedDate).year().toString();
+      this.selectedStringMonth = this.formattedDate === '' ? null : this.months[moment(this.formattedDate).month()];
+    }
+    else{
+      this.formattedDate = '';
+      this.selectedYear = null;
+      this.selectedStringMonth = null;
+    }
   }
 
   changeYear(val : string){

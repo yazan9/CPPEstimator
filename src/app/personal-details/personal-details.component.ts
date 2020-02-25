@@ -33,10 +33,6 @@ export class PersonalDetailsComponent implements OnInit, OnDestroy {
 
     this.Profile = this.CalculatorService.getProfile();    
   }
-  
-  // onTextChange(): void {  
-  //   this.CalculatorService.onTextChange(this.DateOfBirth);
-  // }
 
   ngOnDestroy(){
     this.profileSubscription.unsubscribe();

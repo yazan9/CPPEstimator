@@ -16,7 +16,7 @@
     <div class="col-sm-9">
       <!-- <input type="text" name="DOB" [(ngModel)]="DateOfBirth" class="form-control" id="InputBirth" placeholder="(YYYY-MM)" (input)="onTextChange()" #DOB="ngModel"> -->
       <!-- <month-date-picker [formattedDate]="DateOfBirth" (dateSelected)="onDateSelected($event)"></month-date-picker> -->
-      <month-date-picker-inline
+      <month-date-picker-inline [formattedDate]="DateOfBirth"
               (dateSelected)="onDateSelected($event)" [futureYearsOnly]="false"></month-date-picker-inline>
     </div>
   </div>
